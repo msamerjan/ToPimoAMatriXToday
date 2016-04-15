@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ToPimpaMatricks</string>
+    <string name="activity_main_camera_button">Camera</string>
+    <string name="activity_main_solve_button">Solve</string>
+    <string name="activity_main_rowReduce_button">Row Reduce</string>
+    <string name="activity_main_imageView_description">This is where the image of the matrix will end up</string>
+    <string name="file_not_found_error_message">File Not Found</string>
+
+    //Strings for KeyBoard
+    <string name="keyboard_label">Keyboard</string>
+    <string name="simple_ime">Simple IME</string>
+    <string name="settings_name">Sample Soft Keyboard Settings</string>
+    <string name="language_selection_title">Input languages</string>
+    <string name="select_language">Select input languages</string>
+    <string name="general_category">General</string>
+    <string name="label_subtype_generic">%s</string>
+    <string name="label_done_key">Done</string>
+
+</resources>

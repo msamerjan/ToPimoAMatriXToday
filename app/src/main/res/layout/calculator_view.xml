@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grid_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:columnCount="2"
+    android:rowCount="2"
+    tools:context=".GridXMLActivity"
+    android:layout_gravity="center_horizontal"
+    android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/view_matrix1_edittext"
+            android:layout_gravity="start|top"
+            android:textSize="50sp"
+            android:background="@android:color/transparent"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingEnd="17dp"
+            android:paddingStart="17dp"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:id="@+id/view_matrix2_edittext"
+            android:layout_gravity="start|top"
+            android:textSize="50sp"
+            android:background="@android:color/transparent"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingEnd="17dp"
+            android:paddingStart="17dp"
+            android:imeOptions="actionNext" />
+
+        <EditText
+            android:id="@+id/view_matrix3_edittext"
+            android:layout_gravity="start|top"
+            android:textSize="50sp"
+            android:background="@android:color/transparent"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingEnd="17dp"
+            android:paddingStart="17dp"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:id="@+id/view_matrix4_edittext"
+            android:layout_gravity="start|top"
+            android:textSize="50sp"
+            android:background="@android:color/transparent"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingEnd="17dp"
+            android:paddingStart="17dp"
+            android:imeOptions="actionDone"/>
+
+
+    </GridLayout>
+    </RelativeLayout>
