@@ -26,6 +26,7 @@
             android:paddingBottom="3dp"
             android:paddingEnd="17dp"
             android:paddingStart="17dp"
+            android:inputType="number|numberSigned"
             android:imeOptions="actionNext"/>
 
         <EditText
@@ -37,6 +38,7 @@
             android:paddingBottom="3dp"
             android:paddingEnd="17dp"
             android:paddingStart="17dp"
+            android:inputType="number|numberSigned"
             android:imeOptions="actionNext" />
 
         <EditText
@@ -48,6 +50,7 @@
             android:paddingBottom="3dp"
             android:paddingEnd="17dp"
             android:paddingStart="17dp"
+            android:inputType="number|numberSigned"
             android:imeOptions="actionNext"/>
 
         <EditText
@@ -59,6 +62,7 @@
             android:paddingBottom="3dp"
             android:paddingEnd="17dp"
             android:paddingStart="17dp"
+            android:inputType="number|numberSigned"
             android:imeOptions="actionDone"/>
 
 
