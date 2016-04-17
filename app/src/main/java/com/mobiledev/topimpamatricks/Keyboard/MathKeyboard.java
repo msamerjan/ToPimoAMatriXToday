@@ -43,10 +43,10 @@ public class MathKeyboard extends Keyboard {
             mSpaceKey = key;
         } else if (key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE) {
             mModeChangeKey = key;
-            mSavedModeChangeKey = new LatinKey(res, parent, x, y, parser);
+            mSavedModeChangeKey = new MathKey(res, parent, x, y, parser);
         } else if (key.codes[0] == MathKeyboardView.KEYCODE_LANGUAGE_SWITCH) {
             mLanguageSwitchKey = key;
-            mSavedLanguageSwitchKey = new LatinKey(res, parent, x, y, parser);
+            mSavedLanguageSwitchKey = new MathKey(res, parent, x, y, parser);
         }
         return key;
     }
@@ -93,14 +93,10 @@ public class MathKeyboard extends Keyboard {
                 break;
         }
     }
-    void setSpaceIcon(final Drawable icon) {
-        if (mSpaceKey != null) {
-            mSpaceKey.icon = icon;
-        }
-    }
-    static class LatinKey extends Keyboard.Key {
 
-        public LatinKey(Resources res, Keyboard.Row parent, int x, int y,
+    static class MathKey extends Keyboard.Key {
+
+        public MathKey(Resources res, Keyboard.Row parent, int x, int y,
                         XmlResourceParser parser) {
             super(res, parent, x, y, parser);
         }

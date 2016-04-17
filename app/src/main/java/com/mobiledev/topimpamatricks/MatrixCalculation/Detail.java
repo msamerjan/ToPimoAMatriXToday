@@ -1,4 +1,4 @@
-package com.mobiledev.topimpamatricks;
+package com.mobiledev.topimpamatricks.MatrixCalculation;
 
 /**
  * Created by maiaphoebedylansamerjan on 4/14/16.

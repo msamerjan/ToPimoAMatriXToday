@@ -25,7 +25,8 @@
                 android:resource="@xml/xml" />
         </service>
 
-        <activity android:name=".DetailActivity">
+        <activity android:name=".MatrixCalculation.DetailActivity">
+            <activity android:name=".CalculatorActivity"></activity>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

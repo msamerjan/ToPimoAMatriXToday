@@ -1,44 +1,56 @@
-package com.mobiledev.topimpamatricks;
+package com.mobiledev.topimpamatricks.Calculator;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.graphics.Matrix;
+
+import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
+import com.mobiledev.topimpamatricks.MatrixCalculation.DetailActivity;
+import com.mobiledev.topimpamatricks.MatrixCalculation.DetailRecyclerViewAdapter;
+import com.mobiledev.topimpamatricks.FormatHelper;
+import com.mobiledev.topimpamatricks.MainActivity;
+import com.mobiledev.topimpamatricks.R;
+
+import org.ejml.data.CDenseMatrix64F;
+import org.ejml.ops.CRandomMatrices;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
- * Created by maiaphoebedylansamerjan on 4/16/16.
+ * Created by maiaphoebedylansamerjan on 4/17/16.
  */
-public class MatrixMainActivity extends AppCompatActivity {
+public class CalculatorActivity extends Activity {
 
-    private final String apiKey = "4571bd58-9662-4d0d-9dfa-23f0479db860";
+    public static final String CALCULATOR_URL = "http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Calculator-icon.png";
+    public static final String DEFAULT_MATRIX_URL = "http://ncalculators.com/images/formulas/2x2-matrix.png";
+    public static final String KEYBOARD_URL = "https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0Bx4BSt6jniD7c2M0WDlSakI4akE/usability_bidirectionality_guidelines_whennot3.png";
 
-    public static final String TAG = MatrixMainActivity.class.getSimpleName();
+    public static final String API_KEY = "4571bd58-9662-4d0d-9dfa-23f0479db860";
+
+    public static final String TAG = DetailActivity.class.getSimpleName();
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri fileUri;
@@ -48,30 +60,98 @@ public class MatrixMainActivity extends AppCompatActivity {
     private String mImageFullPathAndName = "";
     private Intent intent;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_matrix_main);
+    private Detail[] mDetails;
+    private DetailRecyclerViewAdapter mAdapter;
 
-        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-
-        ButterKnife.bind(this);
-
-    }
+    public static final String ARG_MATRIX = "matrix";
+    public  final static String SERIALIZABLE_KEY = "key";
 
     @Bind(R.id.activity_main_camera_image)
     ImageView mCameraImage;
 
-    @Bind(R.id.activity_main_digital_matrix)
-    TextView mDigitalMatrix;
+    @Bind(R.id.detail_recycler)
+    RecyclerView mRecyclerView;
+
+    @Bind(R.id.detail_activity_webview)
+    WebView mWebView;
+
+    @Bind(R.id.activity_calculator_icon)
+    ImageButton mCalculatorIcon;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.calculator_activity);
+
+        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        ButterKnife.bind(this);
+
+        CDenseMatrix64F matrixA = (CDenseMatrix64F) getIntent().getSerializableExtra(MainActivity.SERIALIZABLE_KEY);
+        CDenseMatrix64F matrixB = (CDenseMatrix64F) getIntent().getSerializableExtra(MainActivity.SERIALIZABLE_KEY);
+
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        String js = FormatHelper.matricesToLatex(matrixA, matrixB);
+        mWebView.loadDataWithBaseURL("file:///android_asset/", js, "text/html", "UTF-8", null);
+
+        mDetails = CalculatorRecyclerViewHelper.getCalculations(matrixA, matrixB);
+        mAdapter = new DetailRecyclerViewAdapter(mDetails, new DetailRecyclerViewAdapter.DetailRowOnClickListener() {
+            @Override
+            public void onDetailRowClick(Detail detail) {
+                // toast
+            }
+        });
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+
+        //Workorder workorder = (Workorder) intent.getSerializableExtra("SomeUniqueKey");
+
+//        double[][] array = new double[][]{{1, 1, 3, 0}, {5, 0, 7, 0}};
+//        CDenseMatrix64F matrix = new CDenseMatrix64F(array); // by columns then rows: real, im
+//        mMatrix = matrix;
+//
+//        Log.d(TAG, "real at r = 0, c = 0 " + matrix.getReal(0, 0));
+//        Log.d(TAG, "real at r = 0, c = 1 " + matrix.getReal(0, 1));
+//        Log.d(TAG, "real at r = 1, c = 0 " + matrix.getReal(1, 0));
+//        Log.d(TAG, "real at r = 1, c = 1 " + matrix.getReal(1, 1));
+//        Log.d(TAG, "imaginary at r = 0, c = 0 " + matrix.getImaginary(0, 0));
+//        Log.d(TAG, "imaginary at r = 0, c = 1 " + matrix.getImaginary(0, 1));
+//        Log.d(TAG, "imaginary at r = 1, c = 0 " + matrix.getImaginary(1, 0));
+//        Log.d(TAG, "imaginary at r = 1, c = 1 " + matrix.getImaginary(1, 1));
 
 
-    @OnClick(R.id.activity_main_camera_button)
+    }
+
+    @OnClick(R.id.activity_camera_icon)
     public void cameraButtonClicked() {
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
+
+    @OnClick(R.id.activity_calculator_icon)
+    public void calculatorButtonClicked() {
+        CDenseMatrix64F matrixA = CRandomMatrices.createHermitian(2, -10, 10, new Random());
+        CDenseMatrix64F matrixB = CRandomMatrices.createHermPosDef(2, new Random());
+        Intent intent = new Intent(this, CalculatorActivity.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable(SERIALIZABLE_KEY, matrixA);
+        mBundle.putSerializable(SERIALIZABLE_KEY, matrixB);
+        intent.putExtras(mBundle);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.activity_keyboard_icon)
+    public void keyboardButtonClicked() {
+        CDenseMatrix64F matrix = CRandomMatrices.createHermPosDef(2, new Random());
+        Intent intent = new Intent(this, Detail.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
+        intent.putExtras(mBundle);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -93,34 +173,6 @@ public class MatrixMainActivity extends AppCompatActivity {
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 mCameraImage.setImageBitmap(imageBitmap);
             }*/
-
-            String url = "https://api.idolondemand.com/";
-
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(url).build();
-            OCRService ocrService = retrofit.create(OCRService.class);
-            RequestBody apikeyRequestBody = RequestBody.create(MediaType.parse("text/plain"), apiKey);
-            RequestBody modeRequestBody = RequestBody.create(MediaType.parse("text/plain"), "document_photo");
-            File imageFile = new File(fileUri.getPath());
-            RequestBody fileRequestBody = RequestBody.create(MediaType.parse("image/jpeg"), imageFile);
-            Call<ResponseBody> call = ocrService.postMatrix(apikeyRequestBody, fileRequestBody, modeRequestBody);
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Log.d(TAG, "DONE!");
-                    try {
-                        Log.d(TAG, response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.e(TAG, "You fucked up, son", t);
-
-                }
-            });
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), fileUri);
@@ -203,4 +255,5 @@ public class MatrixMainActivity extends AppCompatActivity {
         rotate90DegAntiClock.preRotate(deg);
         return Bitmap.createBitmap(pic, 0, 0, pic.getWidth(), pic.getHeight(), rotate90DegAntiClock, true);
     }
+
 }

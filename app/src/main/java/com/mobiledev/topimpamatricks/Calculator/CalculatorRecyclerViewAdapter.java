@@ -1,4 +1,4 @@
-package com.mobiledev.topimpamatricks;
+package com.mobiledev.topimpamatricks.Calculator;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,13 +8,17 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
+import com.mobiledev.topimpamatricks.FormatHelper;
+import com.mobiledev.topimpamatricks.R;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by maiaphoebedylansamerjan on 4/14/16.
+ * Created by maiaphoebedylansamerjan on 4/17/16.
  */
-public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecyclerViewAdapter.DetailViewHolder> {
+public class CalculatorRecyclerViewAdapter extends RecyclerView.Adapter<CalculatorRecyclerViewAdapter.DetailViewHolder> {
 
     private Detail[] mDetails;
     private DetailRowOnClickListener mListener;
@@ -23,7 +27,7 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
         void onDetailRowClick(Detail detail);
     }
 
-    public DetailRecyclerViewAdapter(Detail[] details, DetailRowOnClickListener listener) {
+    public CalculatorRecyclerViewAdapter(Detail[] details, DetailRowOnClickListener listener) {
         mDetails = details;
         mListener = listener;
     }
@@ -80,4 +84,5 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
             this.mItemView = itemView;
         }
     }
+
 }

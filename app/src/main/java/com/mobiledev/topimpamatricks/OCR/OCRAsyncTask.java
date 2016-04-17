@@ -1,4 +1,4 @@
-package com.mobiledev.topimpamatricks;
+package com.mobiledev.topimpamatricks.OCR;
 
 import android.os.AsyncTask;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.mobiledev.topimpamatricks;
+package com.mobiledev.topimpamatricks.OCR;
 
 
 import okhttp3.RequestBody;

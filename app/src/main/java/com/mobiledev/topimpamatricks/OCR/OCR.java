@@ -1,4 +1,4 @@
-package com.mobiledev.topimpamatricks;
+package com.mobiledev.topimpamatricks.OCR;
 
 import android.content.Intent;
 import android.database.Cursor;
