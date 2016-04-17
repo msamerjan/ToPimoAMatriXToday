@@ -20,7 +20,7 @@ import android.graphics.Matrix;
 import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
 import com.mobiledev.topimpamatricks.MatrixCalculation.DetailActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.DetailRecyclerViewAdapter;
-import com.mobiledev.topimpamatricks.FormatHelper;
+import com.mobiledev.topimpamatricks.MatrixCalculation.FormatHelper;
 import com.mobiledev.topimpamatricks.MainActivity;
 import com.mobiledev.topimpamatricks.R;
 

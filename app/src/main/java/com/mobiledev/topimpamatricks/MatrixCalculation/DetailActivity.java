@@ -16,9 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
-import com.mobiledev.topimpamatricks.FormatHelper;
 import com.mobiledev.topimpamatricks.Keyboard.CustomKeyboard;
-import com.mobiledev.topimpamatricks.MatrixRecyclerViewHelper;
 import com.mobiledev.topimpamatricks.R;
 
 import org.ejml.data.CDenseMatrix64F;

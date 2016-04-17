@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
-import com.mobiledev.topimpamatricks.FormatHelper;
+import com.mobiledev.topimpamatricks.MatrixCalculation.FormatHelper;
 import com.mobiledev.topimpamatricks.R;
 
 import butterknife.Bind;

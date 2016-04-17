@@ -1,7 +1,7 @@
 package com.mobiledev.topimpamatricks.Calculator;
 
 import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
-import com.mobiledev.topimpamatricks.FormatHelper;
+import com.mobiledev.topimpamatricks.MatrixCalculation.FormatHelper;
 
 import org.ejml.data.CDenseMatrix64F;
 import org.ejml.ops.CCommonOps;
