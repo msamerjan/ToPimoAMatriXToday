@@ -36,7 +36,7 @@ public class MathKeyboard extends Keyboard {
     @Override
     protected Key createKeyFromXml(Resources res, Row parent, int x, int y,
                                    XmlResourceParser parser) {
-        Key key = new LatinKey(res, parent, x, y, parser);
+        Key key = new MathKey(res, parent, x, y, parser);
         if (key.codes[0] == 10) {
             mEnterKey = key;
         } else if (key.codes[0] == ' ') {
