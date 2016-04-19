@@ -6,7 +6,6 @@ import android.preference.PreferenceActivity;
 import com.android.inputmethodcommon.InputMethodSettingsFragment;
 
 
-import com.mobiledev.topimpamatricks.R;
 
 /**
  * Created by maiaphoebedylansamerjan on 4/16/16.
