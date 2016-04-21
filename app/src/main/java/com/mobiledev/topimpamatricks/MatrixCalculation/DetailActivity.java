@@ -1,6 +1,7 @@
 package com.mobiledev.topimpamatricks.MatrixCalculation;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -8,15 +9,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.mobiledev.topimpamatricks.Keyboard.CustomKeyboard;
+import com.mobiledev.topimpamatricks.MainActivity;
 import com.mobiledev.topimpamatricks.R;
 
 import org.ejml.data.CDenseMatrix64F;
@@ -51,21 +57,29 @@ public class DetailActivity extends Activity {
     private static final int TAKE_PICTURE = 2;
     private String mImageFullPathAndName = "";
     private Intent intent;
+    public  final static String SERIALIZABLE_KEY = "key";
+
     private Detail[] mDetails;
     private DetailRecyclerViewAdapter mAdapter;
 
-    CDenseMatrix64F mMatrix;
-    private String ARG_poop = "huh?";
+    public static final String ARG_MATRIX = "matrix";
 
-    CustomKeyboard customKeyboard;
     @Bind(R.id.activity_main_camera_image)
     ImageView mCameraImage;
 
-    @Bind(R.id.web_view_math_test)
-    WebView mWebView;
-
     @Bind(R.id.detail_recycler)
     RecyclerView mRecyclerView;
+
+    @Bind(R.id.detail_activity_webview)
+    WebView mWebView;
+
+    @Bind(R.id.grid_view)
+    GridView mGridView;
+
+    @Nullable
+    @Bind(R.id.matrix_number)
+    Button mMatrixGridItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,26 +89,22 @@ public class DetailActivity extends Activity {
         intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-
         ButterKnife.bind(this);
 
-        double[][] array = new double[][]{{1, 1, 3, 0}, {5, 0, 7, 0}};
-        CDenseMatrix64F matrix = new CDenseMatrix64F(array); // by columns then rows: real, im
-        mMatrix = matrix;
+        CDenseMatrix64F mMatrix = (CDenseMatrix64F) getIntent().getSerializableExtra(MainActivity.SERIALIZABLE_KEY);
+        mMatrix.print();
 
-        Log.d(ARG_poop, "real at r = 0, c = 0 " + matrix.getReal(0, 0));
-        Log.d(ARG_poop, "real at r = 0, c = 1 " + matrix.getReal(0, 1));
-        Log.d(ARG_poop, "real at r = 1, c = 0 " + matrix.getReal(1, 0));
-        Log.d(ARG_poop, "real at r = 1, c = 1 " + matrix.getReal(1, 1));
-        Log.d(ARG_poop, "imaginary at r = 0, c = 0 " + matrix.getImaginary(0, 0));
-        Log.d(ARG_poop, "imaginary at r = 0, c = 1 " + matrix.getImaginary(0, 1));
-        Log.d(ARG_poop, "imaginary at r = 1, c = 0 " + matrix.getImaginary(1, 0));
-        Log.d(ARG_poop, "imaginary at r = 1, c = 1 " + matrix.getImaginary(1, 1));
+        GridViewCustomAdapter mAdapter = new GridViewCustomAdapter(this, mMatrix);
+        mGridView.setAdapter(mAdapter);
+        mGridView.setNumColumns(MainActivity.numCol);
 
-        showMatrix(mMatrix);
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        String js = FormatHelper.matrixToLatex(mMatrix);
+        mWebView.loadDataWithBaseURL("file:///android_asset/", js, "text/html", "UTF-8", null);
 
-        mDetails = MatrixRecyclerViewHelper.getDetails(matrix);
-        mAdapter = new DetailRecyclerViewAdapter(mDetails, new DetailRecyclerViewAdapter.DetailRowOnClickListener() {
+        mDetails = MatrixRecyclerViewHelper.getDetails(mMatrix);
+        this.mAdapter = new DetailRecyclerViewAdapter(mDetails, new DetailRecyclerViewAdapter.DetailRowOnClickListener() {
             @Override
             public void onDetailRowClick(Detail detail) {
                 // toast
@@ -102,27 +112,44 @@ public class DetailActivity extends Activity {
         });
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(this.mAdapter);
 
-        customKeyboard= new CustomKeyboard(this, R.id.keyboardview, R.xml.qwerty );
 
-        customKeyboard.registerEditText(R.id.edittext0);
-        //mCustomKeyboard.registerEditText(R.id.edittext1);
-        //mCustomKeyboard.registerEditText(R.id.edittext2);
-        customKeyboard.registerEditText(R.id.edittext3);
-        customKeyboard.registerEditText(R.id.edittext4);
+
+        //Workorder workorder = (Workorder) intent.getSerializableExtra("SomeUniqueKey");
+
+//        double[][] array = new double[][]{{1, 1, 3, 0}, {5, 0, 7, 0}};
+//        CDenseMatrix64F matrix = new CDenseMatrix64F(array); // by columns then rows: real, im
+//        mMatrix = matrix;
+//
+//        Log.d(TAG, "real at r = 0, c = 0 " + matrix.getReal(0, 0));
+//        Log.d(TAG, "real at r = 0, c = 1 " + matrix.getReal(0, 1));
+//        Log.d(TAG, "real at r = 1, c = 0 " + matrix.getReal(1, 0));
+//        Log.d(TAG, "real at r = 1, c = 1 " + matrix.getReal(1, 1));
+//        Log.d(TAG, "imaginary at r = 0, c = 0 " + matrix.getImaginary(0, 0));
+//        Log.d(TAG, "imaginary at r = 0, c = 1 " + matrix.getImaginary(0, 1));
+//        Log.d(TAG, "imaginary at r = 1, c = 0 " + matrix.getImaginary(1, 0));
+//        Log.d(TAG, "imaginary at r = 1, c = 1 " + matrix.getImaginary(1, 1));
+
+
     }
 
-    public void showMatrix(CDenseMatrix64F matrix) {
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        String js = FormatHelper.matrixToLatex(matrix);
-        mWebView.loadDataWithBaseURL("file:///android_asset/", js, "text/html", "UTF-8", null);
-    }
 
     @OnClick(R.id.activity_camera_icon)
     public void cameraButtonClicked() {
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    //Idk
+    @Nullable
+    @OnClick(R.id.matrix_number)
+    public void gridViewClicked() {
+        System.out.println("Clicked");
+
+        mMatrixGridItem.setInputType(InputType.TYPE_CLASS_NUMBER);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput((mMatrixGridItem), InputMethodManager.SHOW_IMPLICIT);
+
     }
 
     @Override
@@ -141,11 +168,9 @@ public class DetailActivity extends Activity {
                 // get the selected image full path and name
                 mImageFullPathAndName = cursor.getString(columnIndex);
                 cursor.close();
-
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 mCameraImage.setImageBitmap(imageBitmap);
-
             }*/
 
             try {

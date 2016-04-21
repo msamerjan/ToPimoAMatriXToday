@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.mobiledev.topimpamatrix.MatrixMainActivity">
+    android:layout_height="match_parent">
+    //tools:context="com.mobiledev.topimpamatrix.MatrixMainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:contentDescription="@string/activity_main_imageView_description"
-            android:paddingBottom="4dp"
+            android:paddingBottom="4dp"/>
             tools:background="@android:color/holo_blue_light" />
 
         <TextView
@@ -30,7 +30,7 @@
             android:gravity="center"
             android:paddingTop="4dp"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="18sp"/>
             tools:background="@android:color/holo_red_light"
             tools:text="[INSERT MATRIX HERE]" />
 
@@ -54,7 +54,7 @@
             android:paddingEnd="4dp"
             android:text="@string/activity_main_rowReduce_button"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="18sp"/>
             tools:ignore="RtlSymmetry" />
 
         <Button
@@ -80,7 +80,7 @@
             android:paddingStart="4dp"
             android:text="@string/activity_main_solve_button"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="18sp"/>
             tools:ignore="RtlSymmetry" />
 
     </LinearLayout>

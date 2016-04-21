@@ -12,6 +12,10 @@ public class Detail {
         this.latex = latex;
     }
 
+    public Detail(String latex) {
+        this.latex = latex;
+    }
+
     public String getLatex() {
         return latex;
     }

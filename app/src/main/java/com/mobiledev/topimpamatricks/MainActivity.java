@@ -3,6 +3,8 @@ package com.mobiledev.topimpamatricks;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.mobiledev.topimpamatricks.MatrixCalculation.DetailActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.MatrixHelper;
@@ -15,9 +17,11 @@ import java.util.Random;
 /**
  * Created by maiaphoebedylansamerjan on 4/14/16.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public  final static String SERIALIZABLE_KEY = "key";
+    public static final int numCol = 3;
+    public static final int numRow = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +38,10 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
         intent.putExtras(mBundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }
