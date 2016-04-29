@@ -22,7 +22,7 @@
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
             <meta-data android:name="android.view.im"
-                android:resource="@xml/xml" />
+                android:resource="@xml/method" />
         </service>
 
         <activity android:name=".MatrixCalculation.DetailActivity">

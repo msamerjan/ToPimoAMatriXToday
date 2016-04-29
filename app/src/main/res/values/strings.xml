@@ -9,11 +9,12 @@
     //Strings for KeyBoard
     <string name="keyboard_label">Keyboard</string>
     <string name="simple_ime">Simple IME</string>
-    <string name="settings_name">Sample Soft Keyboard Settings</string>
+    <string name="settings_name">Sample Math Keyboard Settings</string>
     <string name="language_selection_title">Input languages</string>
     <string name="select_language">Select input languages</string>
     <string name="general_category">General</string>
     <string name="label_subtype_generic">%s</string>
     <string name="label_done_key">Done</string>
+    <string name="size_of_matrix">Size of Matrix</string>
 
 </resources>
