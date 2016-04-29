@@ -27,13 +27,12 @@ public class GridViewCustomAdapter extends BaseAdapter {
         mActivity = activity;
         mMatrix = matrix;
 
-        int index = matrix.getDataLength()/2;
+        int index = matrix.getDataLength() / 2;
         nums = new double[index];
 
 
         int count = 0;
-        for (int r = 0; r < matrix.getNumRows(); r++)
-        {
+        for (int r = 0; r < matrix.getNumRows(); r++) {
             for (int c = 0; c < matrix.getNumCols(); c++) {
                 nums[count] = matrix.getReal(r, c);
                 count++;

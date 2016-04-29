@@ -16,5 +16,6 @@
     <string name="label_subtype_generic">%s</string>
     <string name="label_done_key">Done</string>
     <string name="size_of_matrix">Size of Matrix</string>
+    <string name="transpose_definition">Transpose: The resulting matrix when reflecting elements over the main diagonal. </string>
 
 </resources>

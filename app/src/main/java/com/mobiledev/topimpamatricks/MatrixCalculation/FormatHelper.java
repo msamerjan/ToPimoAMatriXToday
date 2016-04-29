@@ -3,6 +3,7 @@ package com.mobiledev.topimpamatricks.MatrixCalculation;
 import org.ejml.data.CDenseMatrix64F;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.simple.SimpleMatrix;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,9 +12,6 @@ import java.math.RoundingMode;
  * Created by maiaphoebedylansamerjan on 4/14/16.
  */
 public class FormatHelper {
-    /**
-     * For HTML string size, not LaTeX size (unfortunately).
-     */
     public static String makeLatexString(int size, String string) {
         return "<html><head>"
                 + "<link rel='stylesheet' href='file:///android_asset/jqmath-0.4.3.css'>"
@@ -33,7 +31,7 @@ public class FormatHelper {
     }
 
     public static String matricesToLatex(CDenseMatrix64F matrixA, CDenseMatrix64F matrixB) {
-        return makeLatexString(6, matrixToString(matrixA) + matrixToString(matrixB));
+        return makeLatexString(6, matrixToString(matrixA) + "★" + matrixToString(matrixB));
     }
 
     public static String matrixToLatex(CDenseMatrix64F matrix) {
@@ -80,25 +78,45 @@ public class FormatHelper {
         return string + ")";
     }
 
+    public static String matrixToString(SimpleMatrix matrix) {
+        return matrixToString(matrix.getMatrix());
+    }
+
     public static String vectorToString(Complex64F[] vector) {
-        String string = "(";
+        String string = "(\\table";
         for (int i = 0; i < vector.length; i++) {
             if (i < vector.length - 1) {
-                string += complexToString(vector[i]) + ")";
+                string += complexToString(vector[i]) + "; ";
             } else {
-                string += complexToString(vector[i]) + ", ";
+                string += complexToString(vector[i]) + ")";
             }
         }
         return string;
     }
 
-    public static String vectorToString(double[] vector) {
-        String string = "(";
+    public static String vectorToString(Vector vector) {
+        String string = "(\\table";
+        for (int i = 0; i < vector.getDimension(); i++) {
+            if (i < vector.getDimension() - 1) {
+                string += doubleToString(vector.getComponents()[i], 2) + "; ";
+            } else {
+                string += doubleToString(vector.getComponents()[i], 2) + ")";
+            }
+        }
+        return string;
+    }
+
+    public static String polarVectorToString(Vector vector) {
+        return "(\\table r; θ) = " + arrayToVector(new double[]{vector.getMagnitude(), vector.getTheta()});
+    }
+
+    public static String arrayToVector(double[] vector) {
+        String string = "(\\table";
         for (int i = 0; i < vector.length; i++) {
             if (i < vector.length - 1) {
-                string += round(vector[i], 2) + ")";
+                string += round(vector[i], 2) + "; ";
             } else {
-                string += round(vector[i], 2) + ", ";
+                string += round(vector[i], 2) + ")";
             }
         }
         return string;
@@ -109,19 +127,16 @@ public class FormatHelper {
             int imaginaryPart = (int) Math.abs(complex.imaginary);
             switch (imaginaryPart) {
                 case 0:
-                    return round(complex.real, 2) + "";
+                    return "0";
                 case 1:
-                    return complex.imaginary > 0 ? " + i" : " - i";
+                    return complex.imaginary > 0 ? "i" : "-i";
                 default:
-                    if ((int) complex.imaginary == complex.imaginary) {
-                        return complex.imaginary > 0 ? " + " + (int) complex.imaginary + "i" : " - " + (int) complex.imaginary + "i";
-                    }
-                    return complex.imaginary > 0 ? round(complex.imaginary, 2) + "i" : round(complex.imaginary, 2) + "i";
+                    return complex.imaginary > 0 ? doubleToString(complex.imaginary, 2) + "i" : " - " + doubleToString(complex.imaginary, 2) + "i";
             }
         }
-        String realPart = ((int) complex.real == complex.real) ? (int) complex.real + "" : round(complex.real, 2) + "";
+        String realPart = doubleToString(complex.real, 2);
         if (complex.isReal()) {
-            return realPart;
+            return doubleToString(complex.real, 2);
         }
         if (complex.imaginary == 0) {
             return round(complex.real, 2) + "";
@@ -131,6 +146,51 @@ public class FormatHelper {
         }
         String imaginaryPart = ((int) complex.imaginary == complex.imaginary) ? (int) Math.abs(complex.imaginary) + "" : round(Math.abs(complex.imaginary), 2) + "";
         return complex.imaginary > 0 ? realPart + " + " + imaginaryPart + "i" : realPart + " - " + imaginaryPart + "i";
+    }
+
+    public static Complex64F stringToComplex(String string) {
+
+        /** assuming input in form: "# +/- #i".*/
+//        double real = 0;
+//        double imaginary = 0;
+//        boolean realSet = false;
+//        boolean imaginarySet = false;
+//        boolean sign1 = true; // true: positive, false: negative
+//        boolean sign2 = true; // true: positive, false: negative
+//        int pivot = 0;
+//        switch (string.charAt(i)) {
+//                case 'i':
+//                    if ()
+//                    break;
+//
+//                case '+':
+//                    if (i == 0) continue;
+//                    else {
+//                        pivot = i;
+//                        if (realSet && )
+//                        sign = true;
+//                    }
+//                    break;
+//
+//                case '-':
+//                    if (i == 0) sign1 = false;
+//                    if (realSet || imaginarySet) sign2 = false;
+//                    break;
+//
+//                default:
+
+
+        for (int i = 0; i < string.length(); i++) {
+            if (string.charAt(i) == '+' || string.charAt(i) == '-') {
+                return new Complex64F(Double.parseDouble(string.substring(0, i)), Double.parseDouble(string.substring(i + 1, string.length() - 1)));
+            }
+        }
+        return new Complex64F(0, Double.parseDouble(string.substring(0, string.length() - 1)));
+    }
+
+    public static String doubleToString(double value, int places) {
+        if ((int) value == value) return (int) value + "";
+        return round(value, places) + "";
     }
 
     public static double round(double value, int places) {
@@ -147,4 +207,5 @@ public class FormatHelper {
     public static String booleanToString(boolean b) {
         return b ? "yes" : "no";
     }
+
 }

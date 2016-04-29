@@ -39,19 +39,28 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
 
     @Override
     public void onBindViewHolder(DetailViewHolder holder, int position) {
-        final Detail detail = mDetails[position];
+        final Detail detail = mDetails[position]; // CRASHSES AT 9
 
-        holder.mTextView.setText(detail.getDescription()); // doesn't like this
+        holder.mTextView.setText(detail.getDescription());
         WebSettings webSettings = holder.mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         String js = FormatHelper.makeLatexString(detail.getLatex());
         holder.mWebView.loadDataWithBaseURL("file:///android_asset/", js, "text/html", "UTF-8", null);
 
+        // holder.mTextViewDescription.setText(detail.getDefinition());
+        // 0r latex version
+
+        // String description = FormatHelper.makeLatexString(detail.getDescription());
+        // holder.mTextViewDescription.loadDataWithBaseURL("file:///android_asset/", js, "text/html", "UTF-8", null);
 
         holder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onDetailRowClick(detail);
+//                MyViewHolder holder = (MyViewHolder) v.getTag();
+//                boolean result = holder.expandableLayout.toggleExpansion();
+//                Item item = mItems.get(holder.getAdapterPosition());
+//                item.isExpand = result ? !item.isExpand : item.isExpand;
             }
         });
     }
@@ -79,7 +88,7 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            this.mItemView = itemView;
+            mItemView = itemView;
         }
     }
 }
