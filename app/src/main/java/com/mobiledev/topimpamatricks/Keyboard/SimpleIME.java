@@ -5,12 +5,10 @@ import android.app.Activity;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.KeyboardView;
 import android.text.Selection;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.mobiledev.topimpamatricks.R;
@@ -41,7 +39,9 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     @Bind(R.id.entry4)
     EditText entry4;
 
-
+public interface KeyListener{
+ void KeyboardActionListener ();
+}
 
    RelativeLayout containerLayout;
     static int totalEditTexts = 0;
@@ -76,6 +76,7 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
                 entry2.requestFocus();
                 Selection.setSelection(entry4.getText(), entry4.getSelectionStart());
                 entry3.requestFocus();
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.KEYCODE_ENTER));
             case CodeRight:
                 Selection.setSelection(entry1.getText(), entry1.getSelectionStart());
                 entry2.requestFocus();
@@ -83,18 +84,21 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
                 entry3.requestFocus();
                 Selection.setSelection(entry3.getText(), entry3.getSelectionStart());
                 entry4.requestFocus();
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, KeyEvent.KEYCODE_ENTER));
             case CodeUp:
                 Selection.setSelection(entry3.getText(), entry3.getSelectionStart());
                 entry1.requestFocus();
                 Selection.setSelection(entry4.getText(), entry4.getSelectionStart());
                 entry2.requestFocus();
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_ENTER));
             case CodeDown:
                 Selection.setSelection(entry1.getText(), entry1.getSelectionStart());
                 entry3.requestFocus();
                 Selection.setSelection(entry2.getText(), entry2.getSelectionStart());
                 entry4.requestFocus();
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, KeyEvent.KEYCODE_ENTER));
             case ImaginaryNum:
-
+                ic.sendKeyEvent(new KeyEvent(-(1),KeyEvent.KEYCODE_ENTER));
             default:
                 char code = (char)primaryCode;
                 ic.commitText(String.valueOf(code),1);
@@ -136,19 +140,5 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         return key;
     }
 
-    public void addView(View v){
-        totalEditTexts++;
-        if (totalEditTexts > 100)
-            return;
-        EditText editText = new EditText(this);
-        containerLayout.addView(editText);
-        editText.setGravity(Gravity.RIGHT);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) editText.getLayoutParams();
-        layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
-        editText.setLayoutParams(layoutParams);
-        //if you want to identify the created editTexts, set a tag, like below
-        editText.setTag("EditText" + totalEditTexts);
-
-    }
 
 }

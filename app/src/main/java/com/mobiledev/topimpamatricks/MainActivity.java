@@ -2,12 +2,14 @@ package com.mobiledev.topimpamatricks;
 
 import android.content.Intent;
 import android.inputmethodservice.Keyboard;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.mobiledev.topimpamatricks.Keyboard.MathKeyboard;
+import com.mobiledev.topimpamatricks.Keyboard.MathKeyboardView;
 import com.mobiledev.topimpamatricks.MatrixCalculation.DetailActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.MatrixHelper;
 import com.mobiledev.topimpamatricks.MatrixCalculation.MatrixRecyclerViewHelper;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     MatrixRecyclerViewHelper matrixRecyclerViewHelper;
 
     MathKeyboard mathKeyboard;
+    private MathKeyboard mMathKeyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mathKeyboard.registerEditText(R.id.entry4);
     }
 
+   /* @Override
+    public View onCreateInputView() {
+        MathKeyboardView inputView =
+                (MathKeyboardView) getLayoutInflater().inflate( R.layout.keyboard, null);
+
+        inputView.setOnKeyboardActionListener((KeyboardView.OnKeyboardActionListener) this);
+        
+        inputView.setKeyboard(mMathKeyboard);
+
+        return mInputView;
+    }*/
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent=new Intent (this,DetailActivity.class);
@@ -64,4 +79,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override public void onBackPressed() {
         if( mathKeyboard.isMathKeyboardVisible() ) mathKeyboard.hideMathKeyboard(); else this.finish();
     }
+
 }

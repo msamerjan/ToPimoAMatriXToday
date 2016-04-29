@@ -1,14 +1,13 @@
 package com.mobiledev.topimpamatricks.Keyboard;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import com.android.inputmethodcommon.InputMethodSettingsFragment;
 
-
-
+import com.mobiledev.topimpamatricks.R;
 /**
- * Created by maiaphoebedylansamerjan on 4/16/16.
+ * Created by maiaphoebedylansamerjan on 4/28/16.
  */
 public class ImePreferences extends PreferenceActivity {
     @Override
@@ -38,5 +37,4 @@ public class ImePreferences extends PreferenceActivity {
             addPreferencesFromResource(R.xml.ime_preferencec);
         }
     }
-
 }

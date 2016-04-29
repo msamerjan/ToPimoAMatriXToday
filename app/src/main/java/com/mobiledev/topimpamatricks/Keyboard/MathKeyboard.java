@@ -4,18 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.view.View.OnFocusChangeListener;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.GridView;
 
 import com.mobiledev.topimpamatricks.R;
 
@@ -24,8 +24,6 @@ import com.mobiledev.topimpamatricks.R;
  */
 public class MathKeyboard extends Keyboard {
 
-    GridView container; // create a scrollView in which you can put all EditTexts
-    static int totalEditTexts = 0;
     private Key mEnterKey;
     private Key mSpaceKey;
 
@@ -48,6 +46,20 @@ public class MathKeyboard extends Keyboard {
                          CharSequence characters, int columns, int horizontalPadding) {
         super(context, layoutTemplateResId, characters, columns, horizontalPadding);
     }
+
+
+    public MathKeyboard(Activity host, int viewid, int layoutid) {
+        super(host, viewid,layoutid);
+        mHostActivity= host;
+        mKeyboardView= (MathKeyboardView) mHostActivity.findViewById(viewid);
+        mKeyboardView.setKeyboard(new Keyboard(mHostActivity, layoutid));
+        mKeyboardView.setPreviewEnabled(false); // NOTE Do not show the preview balloons
+        mKeyboardView.setOnKeyboardActionListener(new SimpleIME());
+        // Hide the standard keyboard initially
+        mHostActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+    }
+
     @Override
     protected Key createKeyFromXml(Resources res, Row parent, int x, int y,
                                    XmlResourceParser parser) {
@@ -66,15 +78,6 @@ public class MathKeyboard extends Keyboard {
         return key;
     }
 
-    public MathKeyboard(Activity host, int viewid, int layoutid) {
-        mHostActivity= host;
-        mKeyboardView= (MathKeyboardView)mHostActivity.findViewById(viewid);
-        mKeyboardView.setKeyboard(new Keyboard(mHostActivity, layoutid));
-        mKeyboardView.setPreviewEnabled(false); // NOTE Do not show the preview balloons
-        mKeyboardView.setOnKeyboardActionListener(m);
-        // Hide the standard keyboard initially
-        mHostActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
 
     void setLanguageSwitchKeyVisibility(boolean visible) {
         if (visible) {
@@ -114,6 +117,9 @@ public class MathKeyboard extends Keyboard {
         }
     }
 
+    public boolean isMathKeyboardVisible() {
+        return mKeyboardView.getVisibility() == View.VISIBLE;
+    }
 
     public void onShowMathKeyboard(View v){
         mKeyboardView.setVisibility(View.VISIBLE);
@@ -153,6 +159,12 @@ public class MathKeyboard extends Keyboard {
             }
         });
         edittext.setInputType(edittext.getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+    }
+
+    public void setSpaceIcon(final Drawable icon) {
+        if (mSpaceKey != null) {
+            mSpaceKey.icon = icon;
+        }
     }
 
     static class MathKey extends Keyboard.Key {

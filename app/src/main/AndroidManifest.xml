@@ -24,6 +24,13 @@
             <meta-data android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
+        <activity android:name=".Keyboard.ImePreferences" android:label="@string/settings_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+
+
 
         <activity android:name=".MatrixCalculation.DetailActivity">
             <activity android:name=".CalculatorActivity"></activity>

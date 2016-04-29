@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.inputmethodservice.KeyboardView
+<com.mobiledev.topimpamatricks.Keyboard.MathKeyboardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyboard"
     android:layout_width="match_parent"
@@ -11,4 +11,4 @@
     android:visibility="gone"
     android:keyPreviewLayout ="@layout/keyboard_preview">
 
-</android.inputmethodservice.KeyboardView>
+</com.mobiledev.topimpamatricks.Keyboard.MathKeyboardView>

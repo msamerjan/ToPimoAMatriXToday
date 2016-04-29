@@ -35,13 +35,13 @@
     </LinearLayout>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/detail_activity_frame_layout"
+        android:id="@+id/edit_activity_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_below="@+id/icon_bar">
 
         <WebView
-            android:id="@+id/detail_activity_webview"
+            android:id="@+id/edit_activity_webview"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:textSize="14sp"
