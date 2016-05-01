@@ -57,7 +57,7 @@ public class DetailActivity extends Activity {
         ButterKnife.bind(this);
 
         CDenseMatrix64F mMatrix = (CDenseMatrix64F) getIntent().getSerializableExtra(MainActivity.SERIALIZABLE_KEY);
-        mMatrix.print();
+//        mMatrix.print();
 
 //        GridViewCustomAdapter mAdapter = new GridViewCustomAdapter(this, mMatrix);
 //        mGridView.setAdapter(mAdapter);

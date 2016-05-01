@@ -2,38 +2,24 @@ package com.mobiledev.topimpamatricks.Calculator;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.graphics.Matrix;
 
+import com.mobiledev.topimpamatricks.Keyboard.MathKeyboard;
+import com.mobiledev.topimpamatricks.Keyboard.SimpleIME;
+import com.mobiledev.topimpamatricks.MainActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
-import com.mobiledev.topimpamatricks.MatrixCalculation.DetailActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.DetailRecyclerViewAdapter;
 import com.mobiledev.topimpamatricks.MatrixCalculation.FormatHelper;
-import com.mobiledev.topimpamatricks.MainActivity;
 import com.mobiledev.topimpamatricks.R;
 
 import org.ejml.data.CDenseMatrix64F;
-import org.ejml.ops.CRandomMatrices;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Date;
+import java.io.Serializable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,6 +35,7 @@ public class CalculatorActivity extends Activity {
     public static final String KEYBOARD_URL = "https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0Bx4BSt6jniD7c2M0WDlSakI4akE/usability_bidirectionality_guidelines_whennot3.png";
 
     public static final String TAG = CalculatorActivity.class.getSimpleName();
+    private static final String SERIALIZABLE_KEY = "key";
 
     private Detail[] mDetails;
     private DetailRecyclerViewAdapter mAdapter;
@@ -66,6 +53,8 @@ public class CalculatorActivity extends Activity {
 
     @Bind(R.id.activity_calculator_icon)
     ImageButton mCalculatorIcon;
+
+    private Serializable matrix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,13 +101,14 @@ public class CalculatorActivity extends Activity {
 
     @OnClick(R.id.activity_keyboard_icon)
     public void keyboardButtonClicked() {
-//        CDenseMatrix64F matrix = CRandomMatrices.createHermPosDef(2, new Random());
-//        Intent intent = new Intent(this, Detail.class);
-//        Bundle mBundle = new Bundle();
-//        mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
-//        intent.putExtras(mBundle);
-//        startActivity(intent);
+        MathKeyboard mathKeyboard= new MathKeyboard(this, R.id.keyboard,R.xml.qwerty);
+
+        Intent intent = new Intent(this, SimpleIME.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
+        intent.putExtras(mBundle);
+        startActivityForResult(intent, 100);
     }
 
-
 }
+

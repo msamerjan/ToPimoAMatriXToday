@@ -3,11 +3,8 @@ package com.mobiledev.topimpamatricks;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
 
 import com.mobiledev.topimpamatricks.Calculator.CalculatorActivity;
-import com.mobiledev.topimpamatricks.Keyboard.MathKeyboard;
 import com.mobiledev.topimpamatricks.MatrixCalculation.DetailActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.MatrixHelper;
 
@@ -20,21 +17,20 @@ import java.util.Random;
 /**
  * Created by maiaphoebedylansamerjan on 4/14/16.
  */
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity {
 
-    public  final static String SERIALIZABLE_KEY_A = "key_a";
-    public  final static String SERIALIZABLE_KEY_B = "key_b";
+    public final static String SERIALIZABLE_KEY_A = "key_a";
+    public final static String SERIALIZABLE_KEY_B = "key_b";
     public static final String SERIALIZABLE_KEY = "key";
 
     public static int columns;
     public static int rows;
-    private MathKeyboard mathKeyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /** Change these strings to change what Activity is launched. */
+        /** Change these values to choose change what Activity is launched. */
         String mathematicalObject = "matrix"; // choices: "matrix", "vector", "number"
         String activityType = "calculator"; // "calculator" for CalculatorActivity, "details" for DetailActivity
         boolean complex = true; // set to false for real objects
@@ -73,41 +69,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         }
 
-
-        mathKeyboard= new MathKeyboard(this, R.id.keyboard, R.xml.qwerty );
-
-        mathKeyboard.registerEditText(R.id.entry1);
-        mathKeyboard.registerEditText(R.id.entry2);
-        mathKeyboard.registerEditText(R.id.entry3);
-        mathKeyboard.registerEditText(R.id.entry4);
     }
 
-   /* @Override
-    public View onCreateInputView() {
-        MathKeyboardView inputView =
-                (MathKeyboardView) getLayoutInflater().inflate( R.layout.keyboard, null);
-
-        inputView.setOnKeyboardActionListener((KeyboardView.OnKeyboardActionListener) this);
-        
-        inputView.setKeyboard(mMathKeyboard);
-
-        return mInputView;
-    }*/
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent=new Intent (this,DetailActivity.class);
-        //intent.putExtra(DetailActivity.ARG_MATRIX,matrixRecyclerViewHelper.getItem(position));
-
-    }
-
-    @Override public void onBackPressed() {
-        if( mathKeyboard.isMathKeyboardVisible() ) mathKeyboard.hideMathKeyboard(); else this.finish();
-    }
-
-
-
-    /** CalculatorActivity: complex matrix. */
+    /**
+     * CalculatorActivity: complex matrix.
+     */
     public void complexMatrixCalculator() {
         CDenseMatrix64F matrixA = CRandomMatrices.createHermPosDef(2, new Random());
         CDenseMatrix64F matrixB = CRandomMatrices.createRandom(2, 2, -8, 10, new Random());
@@ -120,7 +86,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** CalculatorActivity: real matrix. */
+    /**
+     * CalculatorActivity: real matrix.
+     */
     public void realMatrixCalculator() {
         CDenseMatrix64F matrixA = MatrixHelper.makeComplex(RandomMatrices.createOrthogonal(2, 2, new Random(5)));
         CDenseMatrix64F matrixB = MatrixHelper.makeComplex(RandomMatrices.createDiagonal(2, 2, 4, new Random(5)));
@@ -133,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** DetailActivity: complex matrix. */
+    /**
+     * DetailActivity: complex matrix.
+     */
     public void complexMatrixDetails() {
         CDenseMatrix64F matrix = CRandomMatrices.createHermPosDef(2, new Random());
 
@@ -144,7 +114,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** DetailActivity: real matrix. */
+    /**
+     * DetailActivity: real matrix.
+     */
     public void realMatrixDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(MatrixHelper.makeComplex(RandomMatrices.createOrthogonal(2, 2, new Random())));
 
@@ -155,7 +127,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** Calculator Activity: complex vector. */
+    /**
+     * Calculator Activity: complex vector.
+     */
     public void complexVectorCalculator() {
         CDenseMatrix64F matrixA = new CDenseMatrix64F(2, 1);
         matrixA.set(0, 0, 1, 1);
@@ -173,7 +147,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** CalculatorActivity: real vector. */
+    /**
+     * CalculatorActivity: real vector.
+     */
     public void realVectorCalculator() {
         CDenseMatrix64F matrixA = new CDenseMatrix64F(2, 1);
         matrixA.set(0, 0, 1, 0);
@@ -191,7 +167,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** DetailActivity: complex vector. */
+    /**
+     * DetailActivity: complex vector.
+     */
     public void complexVectorDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(2, 1);
         matrix.set(0, 0, 1, 1);
@@ -204,7 +182,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** DetailActivity: real vector. */
+    /**
+     * DetailActivity: real vector.
+     */
     public void realVectorDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(2, 1);
         matrix.set(0, 0, 1, 0);
@@ -217,7 +197,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** CalculatorActivity: complex number. */
+    /**
+     * CalculatorActivity: complex number.
+     */
     public void complexNumberCalculator() {
         CDenseMatrix64F matrixA = new CDenseMatrix64F(1, 1);
         matrixA.set(0, 0, -1, 1);
@@ -233,7 +215,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** CalculatorActivity: real number. */
+    /**
+     * CalculatorActivity: real number.
+     */
     public void realNumberCalculator() {
         CDenseMatrix64F matrixA = new CDenseMatrix64F(1, 1);
         matrixA.set(0, 0, 1, 0);
@@ -249,7 +233,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** DetailActivity: complex number. */
+    /**
+     * DetailActivity: complex number.
+     */
     public void complexNumberDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(1, 1);
         matrix.set(0, 0, -1, 1);
@@ -261,7 +247,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    /** DetailActivity: real number. */
+    /**
+     * DetailActivity: real number.
+     */
     public void realNumberDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(1, 1);
         matrix.set(0, 0, 2, 0);
