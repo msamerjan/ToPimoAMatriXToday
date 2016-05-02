@@ -2,16 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mobiledev.topimpamatrix.MatrixMainActivity">
+    tools:context="com.mobiledev.topimpamatrix.MatrixMainActivity"
+    android:id="@+id/edit_calculator">
 
     <LinearLayout
-        android:id="@+id/icon_bar"
+        android:id="@+id/icon_bar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
         <ImageButton
-            android:id="@+id/activity_camera_icon"
+            android:id="@+id/activity_camera_icon2"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,14 +20,14 @@
             />
 
         <ImageButton
-            android:id="@+id/activity_keyboard_icon"
+            android:id="@+id/activity_keyboard_icon2"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         android:src="@drawable/ic_keyboard"/>
 
         <ImageButton
-            android:id="@+id/activity_calculator_icon"
+            android:id="@+id/activity_calculator_icon2"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -50,7 +51,7 @@
 
         <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/grid_layout"
+            android:id="@+id/edit_grid_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 

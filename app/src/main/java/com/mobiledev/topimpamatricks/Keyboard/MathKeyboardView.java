@@ -1,12 +1,20 @@
 package com.mobiledev.topimpamatricks.Keyboard;
 
+import android.app.Activity;
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.Keyboard.Key;
 import android.inputmethodservice.KeyboardView;
+import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import com.mobiledev.topimpamatricks.R;
 
 /**
  * Created by maiaphoebedylansamerjan on 4/13/16.
@@ -41,7 +49,7 @@ public class MathKeyboardView extends KeyboardView {
             return true;
         }
         /*if (key.codes[0] == CodeLeft) {
-            getOnKeyboardActionListener().addView();
+            getOnKeyboardActionListener().onArrowPressed();
             return true;
         }
         if (key.codes[0] == CodeRight) {
@@ -52,22 +60,22 @@ public class MathKeyboardView extends KeyboardView {
         }
         if (key.codes[0] == CodeUp) {
 
-        }
-        */
+        }*/
+
         else {
             return super.onLongPress(key);
         }
     }
 
 
-  /*  public class GridAddition extends Activity {
+  public class GridAddition extends Activity {
         RelativeLayout containerLayout;
          int totalEditTexts = 0;
 
         public void onCreate(Bundle bundle) {
             super.onCreate(bundle);
-            setContentView(R.layout.);
-            containerLayout = (LinearLayout)findViewById(R.id.mlayout);
+            setContentView(R.layout.edit_text_calculator_activity);
+            containerLayout = (RelativeLayout)findViewById(R.id.edit_calculator);
         }
 
         public void onArrowPressed() {
@@ -85,7 +93,7 @@ public class MathKeyboardView extends KeyboardView {
 
         }
     }
-*/
+
     void setSubtypeOnSpaceKey(final InputMethodSubtype subtype) {
         final MathKeyboard keyboard = (MathKeyboard)getKeyboard();
         keyboard.setSpaceIcon(getResources().getDrawable(subtype.getIconResId()));

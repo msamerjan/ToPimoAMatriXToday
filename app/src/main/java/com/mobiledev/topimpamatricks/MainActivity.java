@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         /** Change these values to choose change what Activity is launched. */
         String mathematicalObject = "matrix"; // choices: "matrix", "vector", "number"
-        String activityType = "calculator"; // "calculator" for CalculatorActivity, "details" for DetailActivity
+        String activityType = "details"; // "calculator" for CalculatorActivity, "details" for DetailActivity
         boolean complex = true; // set to false for real objects
 
         switch (mathematicalObject) {

@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by maiaphoebedylansamerjan on 4/11/16.
  */
-public class KeyboardActivity extends InputMethodService{
+/*public class KeyboardActivity extends InputMethodService{
 
     private Preference mSubtypeEnablerPreference;
     private int mInputMethodSettingsCategoryTitleRes;
@@ -87,51 +87,40 @@ public class KeyboardActivity extends InputMethodService{
         }
         return sb.toString();
     }
-    /**
-     * {@inheritDoc}
-     */
+
+
 
     public void setInputMethodSettingsCategoryTitle(int resId) {
         mInputMethodSettingsCategoryTitleRes = resId;
         updateSubtypeEnabler();
     }
-    /**
-     * {@inheritDoc}
-     */
+
 
     public void setInputMethodSettingsCategoryTitle(CharSequence title) {
         mInputMethodSettingsCategoryTitleRes = 0;
         mInputMethodSettingsCategoryTitle = title;
         updateSubtypeEnabler();
     }
-    /**
-     * {@inheritDoc}
-     */
+
 
     public void setSubtypeEnablerTitle(int resId) {
         mSubtypeEnablerTitleRes = resId;
         updateSubtypeEnabler();
     }
-    /**
-     * {@inheritDoc}
-     */
+
 
     public void setSubtypeEnablerTitle(CharSequence title) {
         mSubtypeEnablerTitleRes = 0;
         mSubtypeEnablerTitle = title;
         updateSubtypeEnabler();
     }
-    /**
-     * {@inheritDoc}
-     */
+
 
     public void setSubtypeEnablerIcon(int resId) {
         mSubtypeEnablerIconRes = resId;
         updateSubtypeEnabler();
     }
-    /**
-     * {@inheritDoc}
-     */
+
 
     public void setSubtypeEnablerIcon(Drawable drawable) {
         mSubtypeEnablerIconRes = 0;
@@ -164,4 +153,4 @@ public class KeyboardActivity extends InputMethodService{
         }
     }
 
-}
+}*/

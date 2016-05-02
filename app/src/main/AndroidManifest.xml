@@ -14,9 +14,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <service android:name=".Keyboard.KeyboardActivity"
-            android:label="@string/keyboard_label"
+        android:theme="@style/Theme.AppCompat.NoActionBar">
+        <service
+            android:name=".Keyboard.SimpleIME"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
@@ -24,21 +24,24 @@
             <meta-data android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
-        <activity android:name=".Keyboard.ImePreferences" android:label="@string/settings_name">
+
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
-
-
-
-        <activity android:name=".MatrixCalculation.DetailActivity">
-            <activity android:name=".CalculatorActivity"></activity>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="MatrixCalculation.DetailActivity"></activity>
+        <activity android:name="Calculator.CalculatorActivity"></activity>
+        <activity android:name="Keyboard.ImePreferences">
+            <action android:name="android.intent.action.MAIN"/>
+        </activity>
+
+
+
     </application>
+
+
 
 </manifest>
