@@ -54,13 +54,6 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     @Bind(R.id.entry4)
     EditText entry4;
 
-    
-
-    public interface KeyListener{
- void KeyboardActionListener ();
-}
-
-
 
     @Override
     public void onCreate() {
