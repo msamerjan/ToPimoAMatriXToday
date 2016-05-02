@@ -83,10 +83,12 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
     @Override
     public View onCreateInputView() {
-        key = (MathKeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
-        keyboard = new MathKeyboard(this, R.xml.qwerty);
-        key.setKeyboard(keyboard);
-        key.setOnKeyboardActionListener(this);
+        MathKeyboardView inputView =
+                (MathKeyboardView) getLayoutInflater().inflate( R.layout.keyboard, null);
+
+        inputView.setOnKeyboardActionListener(this);
+        inputView.setKeyboard(keyboard);
+
         return key;
     }
 

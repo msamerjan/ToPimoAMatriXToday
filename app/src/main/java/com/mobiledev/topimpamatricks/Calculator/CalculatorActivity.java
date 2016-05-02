@@ -1,16 +1,15 @@
 package com.mobiledev.topimpamatricks.Calculator;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 
-import com.mobiledev.topimpamatricks.Keyboard.MathKeyboard;
-import com.mobiledev.topimpamatricks.Keyboard.SimpleIME;
 import com.mobiledev.topimpamatricks.MainActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
 import com.mobiledev.topimpamatricks.MatrixCalculation.DetailRecyclerViewAdapter;
@@ -80,6 +79,7 @@ public class CalculatorActivity extends Activity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
     @OnClick(R.id.activity_camera_icon)
@@ -101,13 +101,8 @@ public class CalculatorActivity extends Activity {
 
     @OnClick(R.id.activity_keyboard_icon)
     public void keyboardButtonClicked() {
-        MathKeyboard mathKeyboard= new MathKeyboard(this, R.id.keyboard,R.xml.qwerty);
-
-        Intent intent = new Intent(this, SimpleIME.class);
-        Bundle mBundle = new Bundle();
-        mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
-        intent.putExtras(mBundle);
-        startActivityForResult(intent, 100);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
 }
