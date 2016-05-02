@@ -1,21 +1,14 @@
 package com.mobiledev.topimpamatricks.MatrixCalculation;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 
-import com.mobiledev.topimpamatricks.MainActivity;
 import com.mobiledev.topimpamatricks.R;
 
-import org.ejml.data.CDenseMatrix64F;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 /**
  * Created by maiaphoebedylansamerjan on 4/11/16.
@@ -49,7 +42,8 @@ public class DetailActivity extends Activity {
     Button mMatrixGridItem;
 
 
-    @Override
+
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
@@ -92,7 +86,7 @@ public class DetailActivity extends Activity {
 //        Log.d(TAG, "imaginary at r = 1, c = 0 " + matrix.getImaginary(1, 0));
 //        Log.d(TAG, "imaginary at r = 1, c = 1 " + matrix.getImaginary(1, 1));
 
-    }
+    }*/
 
 
     @OnClick(R.id.activity_camera_icon)
@@ -110,6 +104,6 @@ public class DetailActivity extends Activity {
 //        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //        imm.showSoftInput((mMatrixGridItem), InputMethodManager.SHOW_IMPLICIT);
 
-    }
+   }
 
 }

@@ -34,7 +34,11 @@
         </activity>
         <activity android:name=".MatrixCalculation.DetailActivity"></activity>
         <activity android:name=".Calculator.CalculatorActivity"></activity>
-        <activity android:name=".Keyboard.ImePreferences"></activity>
+        <activity android:name=".Keyboard.ImePreferences">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mobiledev.topimpamatricks.MainActivity" />
+        </activity>
 
 
 

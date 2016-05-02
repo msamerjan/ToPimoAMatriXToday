@@ -1,30 +1,17 @@
 package com.mobiledev.topimpamatricks.Calculator;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.mobiledev.topimpamatricks.Keyboard.SimpleIME;
-import com.mobiledev.topimpamatricks.MainActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
 import com.mobiledev.topimpamatricks.MatrixCalculation.DetailRecyclerViewAdapter;
-import com.mobiledev.topimpamatricks.MatrixCalculation.FormatHelper;
 import com.mobiledev.topimpamatricks.R;
-
-import org.ejml.data.CDenseMatrix64F;
 
 import java.io.Serializable;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by maiaphoebedylansamerjan on 4/17/16.
@@ -57,7 +44,7 @@ public class CalculatorActivity extends Activity {
 
     private Serializable matrix;
 
-    @Override
+  /*  @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calculator_activity);
@@ -101,7 +88,7 @@ public class CalculatorActivity extends Activity {
 //        startActivity(intent);
     }
 
-    @OnClick(R.id.activity_keyboard_icon)
+    /*@OnClick(R.id.activity_keyboard_icon)
     public void keyboardButtonClicked(View view) {
         Intent intent = new Intent(this, SimpleIME.class);
         EditText editText = (EditText) findViewById(R.id.entry1);
@@ -109,7 +96,7 @@ public class CalculatorActivity extends Activity {
         intent.putExtra(SERIALIZABLE_KEY, message);
         startActivity(intent);
 
-    }
+    }*/
 
 }
 

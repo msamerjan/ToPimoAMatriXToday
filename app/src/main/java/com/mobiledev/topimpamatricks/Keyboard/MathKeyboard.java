@@ -4,18 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
-import android.text.InputType;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
-import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import com.mobiledev.topimpamatricks.R;
 
@@ -108,11 +101,15 @@ public class MathKeyboard extends Keyboard {
                 break;
             case EditorInfo.IME_ACTION_NEXT:
                 mEnterKey.iconPreview = null;
+                mEnterKey.label = null;
+                mEnterKey.icon = res.getDrawable(R.drawable.keyboard_arrow_right);
+                mEnterKey.icon = res.getDrawable(R.drawable.keyboard_arrow_left);
+                mEnterKey.icon = res.getDrawable(R.drawable.keyboard_arrow_down);
+                mEnterKey.icon = res.getDrawable(R.drawable.keyboard_arrow_up);
+                break;
+            default:
+                mEnterKey.label = res.getText(R.string.label_done_key);
                 mEnterKey.icon = null;
-                mEnterKey.label = (CharSequence) res.getDrawable(R.drawable.keyboard_arrow_right);
-                mEnterKey.label = (CharSequence) res.getDrawable(R.drawable.keyboard_arrow_left);
-                mEnterKey.label = (CharSequence) res.getDrawable(R.drawable.keyboard_arrow_down);
-                mEnterKey.label = (CharSequence) res.getDrawable(R.drawable.keyboard_arrow_up);
                 break;
         }
     }
@@ -132,7 +129,7 @@ public class MathKeyboard extends Keyboard {
         mKeyboardView.setEnabled(false);
     }
 
-    public void registerEditText(int resid) {
+   /* public void registerEditText(int resid) {
         EditText edittext= (EditText)mHostActivity.findViewById(resid);
         edittext.setOnFocusChangeListener(new OnFocusChangeListener() {
 
@@ -165,7 +162,7 @@ public class MathKeyboard extends Keyboard {
         if (mSpaceKey != null) {
             mSpaceKey.icon = icon;
         }
-    }
+    }*/
 
     static class MathKey extends Keyboard.Key {
 

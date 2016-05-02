@@ -10,7 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-
+    <Button
+    android:id="@+id/shittybuttonmcgee"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
         <ImageButton
             android:id="@+id/activity_camera_icon2"
             android:layout_weight="1"
@@ -83,7 +86,7 @@
                 android:paddingEnd="17dp"
                 android:paddingStart="17dp"
                 android:imeOptions="actionNext"
-                android:inputType="number|numberSigned|numberDecimal"
+                android:inputType="number"
                 />
 
             <EditText
@@ -96,7 +99,7 @@
                 android:paddingEnd="17dp"
                 android:paddingStart="17dp"
                 android:imeOptions="actionNext"
-                android:inputType="number|numberSigned|numberDecimal"
+                android:inputType="number"
                 />
 
             <EditText
@@ -109,23 +112,10 @@
                 android:paddingEnd="17dp"
                 android:paddingStart="17dp"
                 android:imeOptions="actionDone"
-                android:inputType="number|numberSigned|numberDecimal"
+                android:inputType="number"
                 />
 
         </GridLayout>
     </FrameLayout>
-    <com.mobiledev.topimpamatricks.Keyboard.MathKeyboardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/keyboard"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:visibility="gone"
-        android:keyPreviewLayout ="@layout/keyboard_preview">
-
-    </com.mobiledev.topimpamatricks.Keyboard.MathKeyboardView>
 
 </RelativeLayout>

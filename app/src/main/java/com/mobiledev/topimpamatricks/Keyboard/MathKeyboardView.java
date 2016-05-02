@@ -1,20 +1,12 @@
 package com.mobiledev.topimpamatricks.Keyboard;
 
-import android.app.Activity;
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.Keyboard.Key;
 import android.inputmethodservice.KeyboardView;
-import android.os.Bundle;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.inputmethod.InputMethodSubtype;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
-import com.mobiledev.topimpamatricks.R;
 
 /**
  * Created by maiaphoebedylansamerjan on 4/13/16.
@@ -68,7 +60,7 @@ public class MathKeyboardView extends KeyboardView {
     }
 
 
-  public class GridAddition extends Activity {
+ /* public class GridAddition extends Activity {
         RelativeLayout containerLayout;
          int totalEditTexts = 0;
 
@@ -92,11 +84,11 @@ public class MathKeyboardView extends KeyboardView {
             editText.setTag("EditText" + totalEditTexts);
 
         }
-    }
+    }*/
 
     void setSubtypeOnSpaceKey(final InputMethodSubtype subtype) {
         final MathKeyboard keyboard = (MathKeyboard)getKeyboard();
-        keyboard.setSpaceIcon(getResources().getDrawable(subtype.getIconResId()));
+        //keyboard.setSpaceIcon(getResources().getDrawable(subtype.getIconResId()));
         invalidateAllKeys();
     }
 }
