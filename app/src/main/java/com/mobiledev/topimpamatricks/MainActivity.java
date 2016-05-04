@@ -1,12 +1,13 @@
 package com.mobiledev.topimpamatricks;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.mobiledev.topimpamatricks.Keyboard.ImePreferences;
 import com.mobiledev.topimpamatricks.Keyboard.MathKeyboard;
 import com.mobiledev.topimpamatricks.Keyboard.SimpleIME;
 
@@ -25,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_text_calculator_activity);
-        mathKeyboard= new MathKeyboard(getApplicationContext(ImePreferences),R.id.keyboard);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        }
 
     }
 
