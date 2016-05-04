@@ -15,6 +15,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+
         <service
             android:name=".Keyboard.SimpleIME"
             android:permission="android.permission.BIND_INPUT_METHOD">
@@ -31,13 +32,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MatrixCalculation.DetailActivity"></activity>
-        <activity android:name=".Calculator.CalculatorActivity"></activity>
-        <activity android:name=".Keyboard.ImePreferences">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mobiledev.topimpamatricks.MainActivity" />
         </activity>
 
 

@@ -9,6 +9,8 @@ import android.inputmethodservice.KeyboardView;
 import android.os.IBinder;
 import android.text.InputType;
 import android.text.Selection;
+import android.text.method.MetaKeyKeyListener;
+import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -25,9 +27,15 @@ import butterknife.Bind;
 
 public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
+    static final boolean PROCESS_HARD_KEYS = true;
+
     private MathKeyboardView key;
-    private MathKeyboard keyboard;
+    private MathKeyboard mathKeyboard;
+    private MathKeyboard qwertyKeyboard;
+
     private MathKeyboard currentKeyboard;
+
+    private String space;
     private Activity mHostActivity;
     private InputMethodManager mInputMethodManager;
     private int mLastDisplayWidth;
@@ -35,6 +43,8 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
     private StringBuilder mComposing = new StringBuilder();
     private long mMetaState;
+    private boolean mCapsLock;
+    private long mLastShiftTime;
 
     public final static int CodePrev= 55000;
     public final static int CodeLeft= 2190;
@@ -59,28 +69,26 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     public void onCreate() {
         super.onCreate();
         mInputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        space = getResources().getString(R.string.word_separators);
     }
 
     @Override
     public void onInitializeInterface() {
-        if (keyboard != null) {
-            // Configuration changes can happen after the keyboard gets recreated,
-            // so we need to be able to re-build the keyboards if the available
-            // space has changed.
+        if (mathKeyboard != null) {
             int displayWidth = getMaxWidth();
             if (displayWidth == mLastDisplayWidth) return;
             mLastDisplayWidth = displayWidth;
         }
-        keyboard = new MathKeyboard(this, R.xml.qwerty);
+        mathKeyboard = new MathKeyboard(this, R.xml.math_symbols);
+        qwertyKeyboard=new MathKeyboard(this,R.xml.qwerty);
     }
 
     @Override
     public View onCreateInputView() {
-        MathKeyboardView inputView =
-                (MathKeyboardView) getLayoutInflater().inflate( R.layout.keyboard, null);
+        key = (MathKeyboardView) getLayoutInflater().inflate( R.layout.edit_text_calculator_activity, null);
 
-        inputView.setOnKeyboardActionListener(this);
-        inputView.setKeyboard(keyboard);
+        key.setOnKeyboardActionListener(this);
+        key.setKeyboard(mathKeyboard);
 
         return key;
     }
@@ -90,15 +98,12 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         final boolean shouldSupportLanguageSwitchKey =
                 mInputMethodManager.shouldOfferSwitchingToNextInputMethod(getToken());
         nextKeyboard.setLanguageSwitchKeyVisibility(shouldSupportLanguageSwitchKey);
-        key.setKeyboard(nextKeyboard);
+       key.setKeyboard(nextKeyboard);
     }
 
 
     @Override public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
-
-        // Reset our state.  We want to do this even if restarting, because
-        // the underlying state of the text editor could have changed in any way.
         mComposing.setLength(0);
         //updateCandidates();
 
@@ -112,15 +117,20 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         switch (attribute.inputType & InputType.TYPE_MASK_CLASS) {
             case InputType.TYPE_CLASS_NUMBER:
             case InputType.TYPE_CLASS_DATETIME:
-               currentKeyboard = keyboard;
+               currentKeyboard = mathKeyboard;
+                /*int variation= attribute.inputType & InputType.TYPE_MASK_VARIATION;
+                    if(variation==InputType.TYPE_NUMBER_FLAG_DECIMAL||variation==InputType.TYPE_NUMBER_FLAG_SIGNED){
+
+                    }*/
                 break;
+            case InputType.TYPE_CLASS_TEXT:
+                currentKeyboard=qwertyKeyboard;
 
             default:
-                currentKeyboard = keyboard;
-        }
+                currentKeyboard = mathKeyboard;
+                updateShiftKeyState(attribute);
 
-        // Update the label on the enter key, depending on what the application
-        // says it will do.
+        }
         currentKeyboard.setImeOptions(getResources(), attribute.imeOptions);
     }
 
@@ -129,17 +139,11 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     public void onFinishInput() {
         super.onFinishInput();
 
-        // Clear current composing text and candidates.
         mComposing.setLength(0);
-        //updateCandidates();
 
-        // We only hide the candidates window when finishing input on
-        // a particular editor, to avoid popping the underlying application
-        // up and down if the user is entering text into the bottom of
-        // its window.
         setCandidatesViewShown(false);
 
-        currentKeyboard = keyboard;
+        currentKeyboard = mathKeyboard;
         if (key != null) {
             key.closing();
         }
@@ -148,7 +152,6 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     @Override
     public void onStartInputView(EditorInfo attribute, boolean restarting) {
         super.onStartInputView(attribute, restarting);
-        // Apply the selected keyboard to the input view.
         setMathKeyboard(currentKeyboard);
         key.closing();
         final InputMethodSubtype subtype = mInputMethodManager.getCurrentInputMethodSubtype();
@@ -171,6 +174,36 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     }
 
 
+    private boolean translateKeyDown(int keyCode, KeyEvent event) {
+        mMetaState = MetaKeyKeyListener.handleKeyDown(mMetaState,
+                keyCode, event);
+        int c = event.getUnicodeChar(MetaKeyKeyListener.getMetaState(mMetaState));
+        mMetaState = MetaKeyKeyListener.adjustMetaAfterKeypress(mMetaState);
+        InputConnection ic = getCurrentInputConnection();
+        if (c == 0 || ic == null) {
+            return false;
+        }
+
+        boolean dead = false;
+        if ((c & KeyCharacterMap.COMBINING_ACCENT) != 0) {
+            dead = true;
+            c = c & KeyCharacterMap.COMBINING_ACCENT_MASK;
+        }
+
+        if (mComposing.length() > 0) {
+            char accent = mComposing.charAt(mComposing.length() -1 );
+            int composed = KeyEvent.getDeadChar(accent, c);
+            if (composed != 0) {
+                c = composed;
+                mComposing.setLength(mComposing.length()-1);
+            }
+        }
+
+        onKey(c, null);
+
+        return true;
+    }
+
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
@@ -192,19 +225,49 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
                 return false;
 
             default:
-                //if (PROCESS_HARD_KEYS) {
-                   // if (mPredictionOn && translateKeyDown(keyCode, event)) {
+                if (PROCESS_HARD_KEYS) {
+                    if (translateKeyDown(keyCode, event)) {
                         return true;
+                    }
+                }
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (PROCESS_HARD_KEYS) {
+                mMetaState = MetaKeyKeyListener.handleKeyUp(mMetaState,
+                        keyCode, event);
+        }
+
+        return super.onKeyUp(keyCode, event);
     }
 
     private void commitTyped(InputConnection inputConnection) {
         if (mComposing.length() > 0) {
             inputConnection.commitText(mComposing, mComposing.length());
             mComposing.setLength(0);
-            //updateCandidates();
+        }
+    }
+
+    private void updateShiftKeyState(EditorInfo attr) {
+        if (attr != null
+                && key != null && qwertyKeyboard == key.getKeyboard()) {
+            int caps = 0;
+            EditorInfo ei = getCurrentInputEditorInfo();
+            if (ei != null && ei.inputType != InputType.TYPE_NULL) {
+                caps = getCurrentInputConnection().getCursorCapsMode(attr.inputType);
+            }
+            key.setShifted(mCapsLock || caps != 0);
+        }
+    }
+
+    private boolean isAlphabet(int code) {
+        if (Character.isLetter(code)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -236,9 +299,34 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         InputConnection ic = getCurrentInputConnection();
         View focusCurrent = mHostActivity.getWindow().getCurrentFocus();
         if (focusCurrent == null || focusCurrent.getClass() != EditText.class) return;
-        if (primaryCode == MathKeyboard.KEYCODE_DELETE)
-            ic.deleteSurroundingText(1, 0);
-        else if (primaryCode == MathKeyboard.KEYCODE_DONE) {
+        if (isWordSeparator(primaryCode)) {
+            // Handle separator
+            if (mComposing.length() > 0) {
+                commitTyped(getCurrentInputConnection());
+            }
+            sendKey(primaryCode);
+            updateShiftKeyState(getCurrentInputEditorInfo());
+        } else if (primaryCode == MathKeyboard.KEYCODE_DELETE) {
+            handleBackspace();
+        } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
+        handleShift();
+        } else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
+        handleClose();
+        return;
+         } else if (primaryCode == MathKeyboardView.KEYCODE_LANGUAGE_SWITCH) {
+        handleLanguageSwitch();
+        return;
+            } else if (primaryCode == MathKeyboardView.KEYCODE_OPTIONS) {
+        // Show a menu or somethin'
+            } else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE
+            && key != null) {
+        Keyboard current = key.getKeyboard();
+        if (current == qwertyKeyboard) {
+            setMathKeyboard(mathKeyboard);
+        } else {
+            setMathKeyboard(qwertyKeyboard);
+        }
+    } else if (primaryCode == MathKeyboard.KEYCODE_DONE) {
             ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
         } else if (primaryCode == CodeLeft) {
             Selection.setSelection(entry2.getText(), entry2.getSelectionStart());
@@ -271,8 +359,7 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         } else if (primaryCode == ImaginaryNum) {
             ic.sendKeyEvent(new KeyEvent(-(1), KeyEvent.KEYCODE_ENTER));
         } else {
-            char code = (char) primaryCode;
-            ic.commitText(String.valueOf(code), 1);
+            handleCharacter(primaryCode, keyCodes);
         }
     }
 
@@ -292,54 +379,35 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         //updateShiftKeyState(getCurrentInputEditorInfo());
     }
 
-    /*private void updateCandidates() {
-        if (!mCompletionOn) {
-            if (mComposing.length() > 0) {
-                ArrayList<String> list = new ArrayList<String>();
-                list.add(mComposing.toString());
-                setSuggestions(list, true, true);
-            } else {
-                setSuggestions(null, false, false);
-            }
-        }
-    }*/
-
-   /* private void handleBackspace() {
+   private void handleBackspace() {
         final int length = mComposing.length();
         if (length > 1) {
             mComposing.delete(length - 1, length);
             getCurrentInputConnection().setComposingText(mComposing, 1);
-            updateCandidates();
         } else if (length > 0) {
             mComposing.setLength(0);
             getCurrentInputConnection().commitText("", 0);
-            updateCandidates();
         } else {
             keyDownUp(KeyEvent.KEYCODE_DEL);
         }
         updateShiftKeyState(getCurrentInputEditorInfo());
-    }*/
+    }
 
-    /*private void handleShift() {
-        if (mInputView == null) {
+    private void handleShift() {
+        if (key == null) {
             return;
         }
 
-        Keyboard currentKeyboard = mInputView.getKeyboard();
-        if (keyboard == currentKeyboard) {
-            // Alphabet keyboard
+        Keyboard currentKeyboard = key.getKeyboard();
+        if (mathKeyboard == currentKeyboard) {
+            mathKeyboard.setShifted(false);
+            setMathKeyboard(mathKeyboard);
+            mathKeyboard.setShifted(false);
+        } else if (currentKeyboard == qwertyKeyboard) {
             checkToggleCapsLock();
             key.setShifted(mCapsLock || !key.isShifted());
-        } else if (currentKeyboard == mQwertyKeyboard) {
-            mQwertyKeyboard.setShifted(true);
-            setMathKeyboard(mSymbolsShiftedKeyboard);
-            mSymbolsShiftedKeyboard.setShifted(true);
-        } else if (currentKeyboard == mSymbolsShiftedKeyboard) {
-            mSymbolsShiftedKeyboard.setShifted(false);
-            setLatinKeyboard(mSymbolsKeyboard);
-            mSymbolsKeyboard.setShifted(false);
         }
-    }*/
+    }
 
     private void handleCharacter(int primaryCode, int[] keyCodes) {
         if (isInputViewShown()) {
@@ -347,15 +415,17 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
                 primaryCode = Character.toUpperCase(primaryCode);
             }
         }
-        /*if (isAlphabet(primaryCode) && mPredictionOn) {
+        if (isAlphabet(primaryCode)) {
             mComposing.append((char) primaryCode);
             getCurrentInputConnection().setComposingText(mComposing, 1);
             updateShiftKeyState(getCurrentInputEditorInfo());
-            updateCandidates();
-        } else {*/
+
+        } else {
             getCurrentInputConnection().commitText(
                     String.valueOf((char) primaryCode), 1);
         }
+    }
+
     private void handleClose() {
         commitTyped(getCurrentInputConnection());
         requestHideSelf(0);
@@ -373,6 +443,31 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         }
         return window.getAttributes().token;
     }
+
+    private void handleLanguageSwitch() {
+        mInputMethodManager.switchToNextInputMethod(getToken(), false /* onlyCurrentIme */);
+    }
+
+    private void checkToggleCapsLock() {
+        long now = System.currentTimeMillis();
+        if (mLastShiftTime + 800 > now) {
+            mCapsLock = !mCapsLock;
+            mLastShiftTime = 0;
+        } else {
+            mLastShiftTime = now;
+        }
+    }
+
+    private String getWordSeparators() {
+        return space;
+    }
+
+    public boolean isWordSeparator(int code) {
+        String separators = getWordSeparators();
+        return separators.contains(String.valueOf((char)code));
+    }
+
+
     @Override
     public void swipeLeft() {
 

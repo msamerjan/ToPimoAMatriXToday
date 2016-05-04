@@ -41,4 +41,13 @@
             android:keyWidth="15%p" android:keyLabel="DONE" android:keyEdgeFlags="right"/>
     </Row>
 
+    <Row>
+        <Key android:codes="-2" android:keyLabel="ABC" android:keyWidth="10%p" android:keyEdgeFlags="left" />
+        <Key android:codes="-101" android:keyLabel="KEYBOARD"
+            android:keyWidth="10%p" />
+        <Key android:codes="8230" android:keyLabel="…" android:keyWidth="15%p" />
+        <Key android:codes="10" android:keyLabel="RETURN"
+            android:keyWidth="20%p" android:keyEdgeFlags="right" />
+    </Row>
+
 </Keyboard>

@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.mobiledev.topimpamatricks.Keyboard.ImePreferences;
+import com.mobiledev.topimpamatricks.Keyboard.MathKeyboard;
+import com.mobiledev.topimpamatricks.Keyboard.SimpleIME;
 
 import butterknife.OnClick;
 
@@ -16,17 +18,20 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     private static final String SERIALIZABLE_KEY = "key";
+    final static String ACTION_PREFS_ONE = "com.example.prefs.PREFS_ONE";
+    MathKeyboard mathKeyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_text_calculator_activity);
+        mathKeyboard= new MathKeyboard(getApplicationContext(ImePreferences),R.id.keyboard);
 
     }
 
         @OnClick(R.id.shittybuttonmcgee)
         public void keyboardButtonClicked(View view) {
-            Intent intent = new Intent(this, ImePreferences.class);
+            Intent intent = new Intent(this, SimpleIME.class);
             EditText editText = (EditText) findViewById(R.id.entry1);
             String message = editText.getText().toString();
             intent.putExtra(SERIALIZABLE_KEY, message);

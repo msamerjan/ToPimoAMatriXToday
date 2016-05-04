@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 
@@ -25,33 +25,21 @@ public class MathKeyboard extends Keyboard {
     private Key mLanguageSwitchKey;
 
     private Key mSavedModeChangeKey;
-
-    public MathKeyboard(Context context, int xmlLayoutResId) {
-        super(context, xmlLayoutResId);
-    }
-
     private Key mSavedLanguageSwitchKey;
 
     private MathKeyboardView mKeyboardView;
     private Activity mHostActivity;
+
+
+    public MathKeyboard(Context context, int xmlLayoutResId) {
+        super(context, xmlLayoutResId);
+    }
 
     public MathKeyboard(Context context, int layoutTemplateResId,
                          CharSequence characters, int columns, int horizontalPadding) {
         super(context, layoutTemplateResId, characters, columns, horizontalPadding);
     }
 
-
-    public MathKeyboard(Activity host, int viewid, int layoutid) {
-        super(host, viewid,layoutid);
-        mHostActivity= host;
-        mKeyboardView= (MathKeyboardView) mHostActivity.findViewById(viewid);
-        mKeyboardView.setKeyboard(new Keyboard(mHostActivity, layoutid));
-        mKeyboardView.setPreviewEnabled(false); // NOTE Do not show the preview balloons
-        mKeyboardView.setOnKeyboardActionListener(new SimpleIME());
-        // Hide the standard keyboard initially
-        mHostActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-    }
 
     @Override
     protected Key createKeyFromXml(Resources res, Row parent, int x, int y,
@@ -157,12 +145,12 @@ public class MathKeyboard extends Keyboard {
         });
         edittext.setInputType(edittext.getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
     }
-
+*/
     public void setSpaceIcon(final Drawable icon) {
         if (mSpaceKey != null) {
             mSpaceKey.icon = icon;
         }
-    }*/
+    }
 
     static class MathKey extends Keyboard.Key {
 
