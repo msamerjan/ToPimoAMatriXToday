@@ -22,13 +22,7 @@ public class KeyboardTest {
 
     @Test
     public void KeyboardLaunch(){
-        /*
-        // Type text and then press the button.
-        onView(withId(R.id.))
-                .perform(typeText(STRING_TO_BE_TYPED), closeKeyboard());
-        onView(withId(R.id.number_input_calculator)).perform(click());
 
-        // Check that the text was changed.*/
 
     }
 }

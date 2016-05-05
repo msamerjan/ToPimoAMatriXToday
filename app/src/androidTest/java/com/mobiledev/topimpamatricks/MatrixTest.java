@@ -23,19 +23,19 @@ public class MatrixTest {
     public void testMatrixExists() {
 
         onView(withId(R.id.activity_main_digital_matrix)).check(matches(isDisplayed()));
-        //onView(withText()).perform(click());
-        onView(withId(R.id.activity_main_camera_image)).check(matches(isDisplayed()));
-        //onView(withText()).check(matches(isDisplayed())));
+
+        onView(withId(R.id.new_matrix_button)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.activity_keyboard_icon)).check(matches(isDisplayed()));
+
+
 
         pressBack();
     }
 
     @Test
-    public void RecylcerViewInfoShown(){
-        onView(withId(R.id.detail_row_textview)).check(matches(isDisplayed()));
-        //onView(withText()).perform(click());
-
-        pressBack();
+    public void matrixChangedCorrectly(){
+        
 
     }
 
