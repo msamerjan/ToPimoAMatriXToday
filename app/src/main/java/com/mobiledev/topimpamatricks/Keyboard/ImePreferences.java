@@ -4,6 +4,7 @@ package com.mobiledev.topimpamatricks.Keyboard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 
 import com.mobiledev.topimpamatricks.R;
 /**
@@ -20,7 +21,16 @@ public class ImePreferences extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.settings_name);
+    }
+
+    public static class Prefs1Fragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Load the preferences from an XML resource
+            addPreferencesFromResource(R.xml.ime_preferencec);
+        }
     }
     @Override
     protected boolean isValidFragment(final String fragmentName) {

@@ -26,17 +26,15 @@
                 android:resource="@xml/method" />
         </service>
 
-
-        <activity android:name=".Keyboard.ImePreferences" android:label="@string/settings_name">
+        <activity android:name=".MainActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
         </intent-filter>
     </activity>
-        <activity android:name=".MainActivity" android:label="@string/settings_name">
-            <intent-filter>
-                <action android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+        <activity android:name=".Calculator.DetailActivity"></activity>
+        <activity android:name=".Calculator.CalculatorActivity"></activity>
+        <activity android:name=".Calculator.EditDataActivity"></activity>
 
 
     </application>

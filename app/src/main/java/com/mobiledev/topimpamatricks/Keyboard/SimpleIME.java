@@ -4,7 +4,6 @@ package com.mobiledev.topimpamatricks.Keyboard;
 import android.app.Dialog;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.os.IBinder;
 import android.text.InputType;
 import android.text.Selection;
@@ -23,7 +22,7 @@ import com.mobiledev.topimpamatricks.R;
 
 import butterknife.Bind;
 
-public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
+public class SimpleIME extends InputMethodService implements MathKeyboardView.OnKeyboardActionListener {
 
     static final boolean PROCESS_HARD_KEYS = true;
 
@@ -64,7 +63,7 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     @Override
     public void onCreate() {
         super.onCreate();
-        mInputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        mInputMethodManager = (InputMethodManager)getSystemService(SimpleIME.INPUT_METHOD_SERVICE);
         space = getResources().getString(R.string.word_separators);
     }
 

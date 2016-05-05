@@ -26,6 +26,7 @@ public class DetailTest {
         onView(withId(R.id.detail_activity_webview)).check(matches(isDisplayed()));
         onView(withId(R.id.detail_row_textview)).check(matches(isDisplayed()));
 
+
     }
 
     @Test

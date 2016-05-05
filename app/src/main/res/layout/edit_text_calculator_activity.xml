@@ -10,10 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-    <Button
-    android:id="@+id/shittybuttonmcgee"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+
         <ImageButton
             android:id="@+id/activity_camera_icon2"
             android:layout_weight="1"
@@ -74,7 +71,8 @@
                 android:paddingEnd="17dp"
                 android:paddingStart="17dp"
                 android:imeOptions="actionNext"
-                android:inputType="number|numberSigned|numberDecimal" />
+                android:inputType="number|numberSigned|numberDecimal"
+                android:textColor="@android:color/black"/>
 
             <EditText
                 android:id="@+id/entry2"
@@ -86,7 +84,8 @@
                 android:paddingEnd="17dp"
                 android:paddingStart="17dp"
                 android:imeOptions="actionNext"
-                android:inputType="number"
+                android:inputType="number|numberSigned|numberDecimal"
+                android:textColor="@android:color/black"
                 />
 
             <EditText
@@ -99,7 +98,8 @@
                 android:paddingEnd="17dp"
                 android:paddingStart="17dp"
                 android:imeOptions="actionNext"
-                android:inputType="number"
+                android:inputType="number|numberSigned|numberDecimal"
+                android:textColor="@android:color/black"
                 />
 
             <EditText
@@ -112,7 +112,8 @@
                 android:paddingEnd="17dp"
                 android:paddingStart="17dp"
                 android:imeOptions="actionDone"
-                android:inputType="number"
+                android:inputType="number|numberSigned|numberDecimal"
+                android:textColor="@android:color/black"
                 />
 
         </GridLayout>
@@ -129,6 +130,15 @@
         android:visibility="gone">
 
     </com.mobiledev.topimpamatricks.Keyboard.MathKeyboardView>
+
+    <Button
+        android:id="@+id/new_matrix_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_matrix_button"
+        android:textColor="@android:color/black"
+        android:layout_alignParentBottom="true"
+        />
 
 
 
