@@ -3,8 +3,11 @@ package com.mobiledev.topimpamatricks.Calculator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.mobiledev.topimpamatricks.MainActivity;
 import com.mobiledev.topimpamatricks.MatrixCalculation.MatrixHelper;
@@ -12,6 +15,7 @@ import com.mobiledev.topimpamatricks.R;
 
 import org.ejml.data.CDenseMatrix64F;
 import org.ejml.ops.RandomMatrices;
+
 import java.util.Random;
 
 import butterknife.Bind;
@@ -26,6 +30,8 @@ public class EditDataActivity extends Activity {
     private static final String SERIALIZABLE_KEY = "key";
     public static int numCol;
     public static int numRow;
+    RelativeLayout containerLayout;
+    int totalEditTexts = 0;
 
 
     @Bind(R.id.grid_view)
@@ -49,6 +55,8 @@ public class EditDataActivity extends Activity {
 //        mMatrixGridItem.setInputType(InputType.TYPE_CLASS_NUMBER);
 //        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //        imm.showSoftInput((mMatrixGridItem), InputMethodManager.SHOW_IMPLICIT);
+
+        containerLayout = (RelativeLayout)findViewById(R.id.edit_calculator);
     }
 
     @OnClick(R.id.new_matrix_button)
@@ -63,5 +71,15 @@ public class EditDataActivity extends Activity {
                 intent.putExtras(mBundle);
                 startActivity(intent);
             }
+
+        totalEditTexts=numCol*numRow;
+        if (totalEditTexts > 100)
+            return;
+        EditText editText = new EditText(this);
+        containerLayout.addView(editText);
+        editText.setGravity(Gravity.RIGHT);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) editText.getLayoutParams();
+        layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        editText.setLayoutParams(layoutParams);
         }
     }
