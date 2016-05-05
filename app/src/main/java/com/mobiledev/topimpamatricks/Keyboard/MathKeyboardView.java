@@ -7,6 +7,10 @@ import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.view.inputmethod.InputMethodSubtype;
 
+import com.mobiledev.topimpamatricks.R;
+
+import static android.support.v4.content.res.ResourcesCompat.getDrawable;
+
 /**
  * Created by maiaphoebedylansamerjan on 4/13/16.
  */
@@ -80,7 +84,7 @@ public class MathKeyboardView extends KeyboardView {
 
     void setSubtypeOnSpaceKey(final InputMethodSubtype subtype) {
         final MathKeyboard keyboard = (MathKeyboard)getKeyboard();
-        keyboard.setSpaceIcon(getResources().getDrawable(subtype.getIconResId()));
+        keyboard.setSpaceIcon(getDrawable(getResources(), R.drawable.space_bard, null));
         invalidateAllKeys();
     }
 }

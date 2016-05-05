@@ -6,11 +6,10 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 
 import com.mobiledev.topimpamatricks.R;
+
 
 /**
  * Created by maiaphoebedylansamerjan on 4/13/16.
@@ -102,7 +101,7 @@ public class MathKeyboard extends Keyboard {
         }
     }
 
-    public boolean isMathKeyboardVisible() {
+    /*public boolean isMathKeyboardVisible() {
         return mKeyboardView.getVisibility() == View.VISIBLE;
     }
 
@@ -115,7 +114,7 @@ public class MathKeyboard extends Keyboard {
     public void hideMathKeyboard() {
         mKeyboardView.setVisibility(View.GONE);
         mKeyboardView.setEnabled(false);
-    }
+    }*/
 
    /* public void registerEditText(int resid) {
         EditText edittext= (EditText)mHostActivity.findViewById(resid);

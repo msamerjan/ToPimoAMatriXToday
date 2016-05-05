@@ -1,50 +1,18 @@
 package com.mobiledev.topimpamatricks;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
-import com.mobiledev.topimpamatricks.Keyboard.MathKeyboard;
 import com.mobiledev.topimpamatricks.Keyboard.SimpleIME;
 
-import butterknife.OnClick;
 
 /**
  * Created by maiaphoebedylansamerjan on 4/14/16.
  */
 public class MainActivity extends AppCompatActivity {
-
-    private static final String SERIALIZABLE_KEY = "key";
     final static String ACTION_PREFS_ONE = "com.example.prefs.PREFS_ONE";
-    MathKeyboard mathKeyboard;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_text_calculator_activity);
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager != null) {
-            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        }
-
-    }
-
-        @OnClick(R.id.shittybuttonmcgee)
-        public void keyboardButtonClicked(View view) {
-            Intent intent = new Intent(this, SimpleIME.class);
-            EditText editText = (EditText) findViewById(R.id.entry1);
-            String message = editText.getText().toString();
-            intent.putExtra(SERIALIZABLE_KEY, message);
-            startActivity(intent);
-
-
-    }
-
-   /* public final static String SERIALIZABLE_KEY_A = "key_a";
+    public final static String SERIALIZABLE_KEY_A = "key_a";
     public final static String SERIALIZABLE_KEY_B = "key_b";
     public static final String SERIALIZABLE_KEY = "key";
 
@@ -55,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /** Change these values to choose change what Activity is launched.
-        String mathematicalObject = "matrix"; // choices: "matrix", "vector", "number"
+        /** Change these values to choose change what Activity is launched. */
+       /* String mathematicalObject = "matrix"; // choices: "matrix", "vector", "number"
         String activityType = "details"; // "calculator" for CalculatorActivity, "details" for DetailActivity
         boolean complex = true; // set to false for real objects
 
@@ -92,14 +60,36 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
 
-        }
+            case "dictionary":
+                dictionary();
+        }*/
+
+        //setContentView(R.layout.edit_text_calculator_activity);
+
+
+        /*InputMethodManager inputMethodManager= (InputMethodManager)getSystemService(SimpleIME.INPUT_METHOD_SERVICE);
+        EditText editText = (EditText) findViewById(R.id.entry1);
+        if (inputMethodManager!= null){
+        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);}*/
+
+        SimpleIME simpleIME = new SimpleIME();
+        simpleIME.onCreate();
+        simpleIME.onCreateInputView();
+        simpleIME.onInitializeInterface();
 
     }
 
     /**
-     * CalculatorActivity: complex matrix.
+     * Dictionary.
+     */
+    /*private void dictionary() {
+//        startActivity(new Intent(this, DictionaryActivity.class));
+    }*/
 
-    public void complexMatrixCalculator() {
+    /**
+     * CalculatorActivity: complex matrix.
+     */
+    /*public void complexMatrixCalculator() {
         CDenseMatrix64F matrixA = CRandomMatrices.createHermPosDef(2, new Random());
         CDenseMatrix64F matrixB = CRandomMatrices.createRandom(2, 2, -8, 10, new Random());
 
@@ -109,12 +99,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY_B, matrixB);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * CalculatorActivity: real matrix.
-
-    public void realMatrixCalculator() {
+     */
+    /*public void realMatrixCalculator() {
         CDenseMatrix64F matrixA = MatrixHelper.makeComplex(RandomMatrices.createOrthogonal(2, 2, new Random(5)));
         CDenseMatrix64F matrixB = MatrixHelper.makeComplex(RandomMatrices.createDiagonal(2, 2, 4, new Random(5)));
 
@@ -124,12 +114,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrixB);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * DetailActivity: complex matrix.
-
-    public void complexMatrixDetails() {
+     */
+    /*public void complexMatrixDetails() {
         CDenseMatrix64F matrix = CRandomMatrices.createHermPosDef(2, new Random());
 
         Intent intent = new Intent(this, DetailActivity.class);
@@ -137,12 +127,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * DetailActivity: real matrix.
-
-    public void realMatrixDetails() {
+     */
+    /*public void realMatrixDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(MatrixHelper.makeComplex(RandomMatrices.createOrthogonal(2, 2, new Random())));
 
         Intent intent = new Intent(this, DetailActivity.class);
@@ -150,12 +140,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * Calculator Activity: complex vector.
-
-    public void complexVectorCalculator() {
+     */
+    /*public void complexVectorCalculator() {
         CDenseMatrix64F matrixA = new CDenseMatrix64F(2, 1);
         matrixA.set(0, 0, 1, 1);
         matrixA.set(1, 0, 2, -1);
@@ -170,12 +160,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrixB);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * CalculatorActivity: real vector.
-
-    public void realVectorCalculator() {
+     */
+    /*public void realVectorCalculator() {
         CDenseMatrix64F matrixA = new CDenseMatrix64F(2, 1);
         matrixA.set(0, 0, 1, 0);
         matrixA.set(1, 0, 2, 0);
@@ -190,12 +180,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrixB);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * DetailActivity: complex vector.
-
-    public void complexVectorDetails() {
+     */
+    /*public void complexVectorDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(2, 1);
         matrix.set(0, 0, 1, 1);
         matrix.set(1, 0, 2, 0);
@@ -205,12 +195,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * DetailActivity: real vector.
-
-    public void realVectorDetails() {
+     */
+    /*public void realVectorDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(2, 1);
         matrix.set(0, 0, 1, 0);
         matrix.set(1, 0, 2, 0);
@@ -220,12 +210,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * CalculatorActivity: complex number.
-
-    public void complexNumberCalculator() {
+     */
+   /* public void complexNumberCalculator() {
         CDenseMatrix64F matrixA = new CDenseMatrix64F(1, 1);
         matrixA.set(0, 0, -1, 1);
 
@@ -238,12 +228,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrixB);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * CalculatorActivity: real number.
-
-    public void realNumberCalculator() {
+     */
+    /*public void realNumberCalculator() {
         CDenseMatrix64F matrixA = new CDenseMatrix64F(1, 1);
         matrixA.set(0, 0, 1, 0);
 
@@ -256,12 +246,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrixB);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * DetailActivity: complex number.
-
-    public void complexNumberDetails() {
+     */
+    /*public void complexNumberDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(1, 1);
         matrix.set(0, 0, -1, 1);
 
@@ -270,12 +260,12 @@ public class MainActivity extends AppCompatActivity {
         mBundle.putSerializable(SERIALIZABLE_KEY, matrix);
         intent.putExtras(mBundle);
         startActivity(intent);
-    }
+    }*/
 
     /**
      * DetailActivity: real number.
-
-    public void realNumberDetails() {
+     */
+    /*public void realNumberDetails() {
         CDenseMatrix64F matrix = new CDenseMatrix64F(1, 1);
         matrix.set(0, 0, 2, 0);
 
@@ -285,5 +275,4 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtras(mBundle);
         startActivity(intent);
     }*/
-
 }

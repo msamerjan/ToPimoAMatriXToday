@@ -23,15 +23,15 @@
             android:id="@+id/activity_keyboard_icon"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-            android:src="@drawable/ic_keyboard"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_action_name"/>
 
         <ImageButton
             android:id="@+id/activity_calculator_icon"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-            android:src="@drawable/ic_calc_icon"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/calc_icon"/>
 
     </LinearLayout>
 

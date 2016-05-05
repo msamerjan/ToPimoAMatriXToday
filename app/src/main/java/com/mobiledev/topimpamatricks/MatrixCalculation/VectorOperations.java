@@ -1,9 +1,10 @@
 package com.mobiledev.topimpamatricks.MatrixCalculation;
 
 /**
- * Created by maiaphoebedylansamerjan on 4/29/16.
+ * Created by larspmayrand on 4/23/16.
  */
 public class VectorOperations {
+
     /** Is orthogonal? */
     public static boolean isOrthogonal(Vector vectorA, Vector vectorB) {
         return (0 == dot(vectorA, vectorB));
@@ -83,4 +84,5 @@ public class VectorOperations {
         dopeBasis[2] = add(add(vectorC, projection(vectorA, vectorC).scale(-1)), projection(vectorB, vectorC.scale(-1)).normalize());
         return dopeBasis;
     }
+
 }

@@ -3,96 +3,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mobiledev.topimpamatrix.MatrixMainActivity">
+    tools:context="com.mobiledev.topimpamatrix.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/icon_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <ImageButton
-            android:id="@+id/activity_camera_icon"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_camera"
-            />
-
-        <ImageButton
-            android:id="@+id/activity_keyboard_icon"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-            android:src="@drawable/ic_keyboard"/>
-
-        <ImageButton
-            android:id="@+id/activity_calculator_icon"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-            android:src="@drawable/ic_calc_icon"/>
-
-    </LinearLayout>
-
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/detail_activity_frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/icon_bar">
-
-        <WebView
-            android:id="@+id/detail_activity_webview"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:textSize="14sp"
-            android:scrollbars="none"
-            android:clickable="true"
-            />
-
-        <!--<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:tools="http://schemas.android.com/tools"-->
-        <!--android:id="@+id/grid_layout"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--tools:context=".GridXMLActivity"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:orientation="horizontal">-->
-
-
-
-        <!--</GridLayout>-->
-
-
-
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_layout"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/detail_activity_frame_layout"
-        android:orientation="vertical"
-        android:paddingTop="8dp">
+        tools:context="com.mobiledev.topimpamatrix.MatrixMainActivity">
 
-        <ImageView
-            android:id="@+id/activity_main_camera_image"
+        <LinearLayout
+            android:id="@+id/icon_bar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0"
-            android:contentDescription="@string/activity_main_imageView_description"
-            android:paddingBottom="4dp"
-            tools:background="@android:color/holo_blue_light" />
+            android:layout_height="wrap_content"
+            >
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/detail_recycler"
+            <ImageButton
+                android:id="@+id/activity_keyboard_icon"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_action_name"/>
+
+            <ImageButton
+                android:id="@+id/activity_calculator_icon"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/calc_icon"/>
+
+        </LinearLayout>
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/detail_activity_frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="200dp"
+            android:layout_below="@+id/icon_bar"
+            >
 
-    </LinearLayout>
+            <WebView
+                android:id="@+id/detail_activity_webview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:textSize="14sp"
+                android:scrollbars="none"
+                />
 
+            <View
+                android:id="@+id/activity_detail_click_view"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@android:color/transparent"
+                />
+            <!--<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--xmlns:tools="http://schemas.android.com/tools"-->
+            <!--android:id="@+id/grid_layout"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--tools:context=".GridXMLActivity"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:orientation="horizontal">-->
+
+
+
+            <!--</GridLayout>-->
+
+
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/detail_activity_frame_layout"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <ImageView
+                android:id="@+id/activity_main_camera_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0"
+                android:contentDescription="@string/activity_main_imageView_description"
+                android:paddingBottom="4dp"
+                tools:background="@android:color/holo_blue_light" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/detail_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

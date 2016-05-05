@@ -1,9 +1,14 @@
 package com.mobiledev.topimpamatricks.MatrixCalculation;
 
 /**
- * Created by maiaphoebedylansamerjan on 4/29/16.
+ * Created by larspmayrand on 4/23/16.
+ */
+
+/**
+ * Model of a Vector
  */
 public class Vector {
+
     /**
      * Name of vector.
      */
@@ -155,4 +160,6 @@ public class Vector {
     public double[] getComponents() {
         return components;
     }
+
 }
+

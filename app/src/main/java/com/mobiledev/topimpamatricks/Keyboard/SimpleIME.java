@@ -1,7 +1,6 @@
 package com.mobiledev.topimpamatricks.Keyboard;
 
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
@@ -14,7 +13,6 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
@@ -29,17 +27,15 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
     static final boolean PROCESS_HARD_KEYS = true;
 
-    private MathKeyboardView key;
+    private MathKeyboardView mathKeyboardView;
     private MathKeyboard mathKeyboard;
     private MathKeyboard qwertyKeyboard;
 
     private MathKeyboard currentKeyboard;
 
     private String space;
-    private Activity mHostActivity;
     private InputMethodManager mInputMethodManager;
     private int mLastDisplayWidth;
-    private CompletionInfo[] mCompletions;
 
     private StringBuilder mComposing = new StringBuilder();
     private long mMetaState;
@@ -85,12 +81,13 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
     @Override
     public View onCreateInputView() {
-        key = (MathKeyboardView) getLayoutInflater().inflate( R.layout.edit_text_calculator_activity, null);
+       mathKeyboardView = (MathKeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
 
-        key.setOnKeyboardActionListener(this);
-        key.setKeyboard(mathKeyboard);
+        mathKeyboardView.setOnKeyboardActionListener(this);
+        setMathKeyboard(mathKeyboard);
 
-        return key;
+        return mathKeyboardView;
+
     }
 
 
@@ -98,21 +95,20 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         final boolean shouldSupportLanguageSwitchKey =
                 mInputMethodManager.shouldOfferSwitchingToNextInputMethod(getToken());
         nextKeyboard.setLanguageSwitchKeyVisibility(shouldSupportLanguageSwitchKey);
-       key.setKeyboard(nextKeyboard);
+       mathKeyboardView.setKeyboard(nextKeyboard);
     }
 
 
     @Override public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
         mComposing.setLength(0);
-        //updateCandidates();
+
 
         if (!restarting) {
             // Clear shift states.
             mMetaState = 0;
         }
 
-        mCompletions = null;
 
         switch (attribute.inputType & InputType.TYPE_MASK_CLASS) {
             case InputType.TYPE_CLASS_NUMBER:
@@ -144,8 +140,8 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         setCandidatesViewShown(false);
 
         currentKeyboard = mathKeyboard;
-        if (key != null) {
-            key.closing();
+        if (mathKeyboardView != null) {
+            mathKeyboardView.closing();
         }
     }
 
@@ -153,14 +149,14 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     public void onStartInputView(EditorInfo attribute, boolean restarting) {
         super.onStartInputView(attribute, restarting);
         setMathKeyboard(currentKeyboard);
-        key.closing();
+        mathKeyboardView.closing();
         final InputMethodSubtype subtype = mInputMethodManager.getCurrentInputMethodSubtype();
-        key.setSubtypeOnSpaceKey(subtype);
+        mathKeyboardView.setSubtypeOnSpaceKey(subtype);
     }
 
     @Override
     public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
-        key.setSubtypeOnSpaceKey(subtype);
+        mathKeyboardView.setSubtypeOnSpaceKey(subtype);
     }
 
 
@@ -207,8 +203,8 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                if (event.getRepeatCount() == 0 && key != null) {
-                    if (key.handleBack()) {
+                if (event.getRepeatCount() == 0 && mathKeyboardView != null) {
+                    if (mathKeyboardView.handleBack()) {
                         return true;
                     }
                 }
@@ -253,13 +249,13 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
     private void updateShiftKeyState(EditorInfo attr) {
         if (attr != null
-                && key != null && qwertyKeyboard == key.getKeyboard()) {
+                && mathKeyboardView != null && qwertyKeyboard == mathKeyboardView.getKeyboard()) {
             int caps = 0;
             EditorInfo ei = getCurrentInputEditorInfo();
             if (ei != null && ei.inputType != InputType.TYPE_NULL) {
                 caps = getCurrentInputConnection().getCursorCapsMode(attr.inputType);
             }
-            key.setShifted(mCapsLock || caps != 0);
+            mathKeyboardView.setShifted(mCapsLock || caps != 0);
         }
     }
 
@@ -297,8 +293,8 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
         InputConnection ic = getCurrentInputConnection();
-        View focusCurrent = mHostActivity.getWindow().getCurrentFocus();
-        if (focusCurrent == null || focusCurrent.getClass() != EditText.class) return;
+       // View focusCurrent = mHostActivity.getWindow().getCurrentFocus();
+        //if (focusCurrent == null || focusCurrent.getClass() != EditText.class) return;
         if (isWordSeparator(primaryCode)) {
             // Handle separator
             if (mComposing.length() > 0) {
@@ -319,8 +315,8 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
             } else if (primaryCode == MathKeyboardView.KEYCODE_OPTIONS) {
         // Show a menu or somethin'
             } else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE
-            && key != null) {
-        Keyboard current = key.getKeyboard();
+            && mathKeyboardView != null) {
+        Keyboard current = mathKeyboardView.getKeyboard();
         if (current == qwertyKeyboard) {
             setMathKeyboard(mathKeyboard);
         } else {
@@ -394,24 +390,24 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     }
 
     private void handleShift() {
-        if (key == null) {
+        if (mathKeyboardView == null) {
             return;
         }
 
-        Keyboard currentKeyboard = key.getKeyboard();
+        Keyboard currentKeyboard = mathKeyboardView.getKeyboard();
         if (mathKeyboard == currentKeyboard) {
             mathKeyboard.setShifted(false);
             setMathKeyboard(mathKeyboard);
             mathKeyboard.setShifted(false);
         } else if (currentKeyboard == qwertyKeyboard) {
             checkToggleCapsLock();
-            key.setShifted(mCapsLock || !key.isShifted());
+            mathKeyboardView.setShifted(mCapsLock || !mathKeyboardView.isShifted());
         }
     }
 
     private void handleCharacter(int primaryCode, int[] keyCodes) {
         if (isInputViewShown()) {
-            if (key.isShifted()) {
+            if (mathKeyboardView.isShifted()) {
                 primaryCode = Character.toUpperCase(primaryCode);
             }
         }
@@ -429,7 +425,7 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
     private void handleClose() {
         commitTyped(getCurrentInputConnection());
         requestHideSelf(0);
-        key.closing();
+        mathKeyboardView.closing();
     }
 
     private IBinder getToken() {

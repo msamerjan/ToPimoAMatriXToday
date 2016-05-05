@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mobiledev.topimpamatricks.OCR.OCRService;
 import com.mobiledev.topimpamatricks.R;
 
 import java.io.File;
@@ -34,9 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-/**
- * Created by maiaphoebedylansamerjan on 4/29/16.
- */
+
 public class MatrixMainActivity extends AppCompatActivity {
 
     private final String apiKey = "4571bd58-9662-4d0d-9dfa-23f0479db860";
@@ -92,9 +89,11 @@ public class MatrixMainActivity extends AppCompatActivity {
                 // get the selected image full path and name
                 mImageFullPathAndName = cursor.getString(columnIndex);
                 cursor.close();
+
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 mCameraImage.setImageBitmap(imageBitmap);
+
             }*/
 
             String url = "https://api.idolondemand.com/";

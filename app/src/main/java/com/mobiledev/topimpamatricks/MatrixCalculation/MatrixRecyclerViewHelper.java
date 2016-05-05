@@ -1,5 +1,8 @@
 package com.mobiledev.topimpamatricks.MatrixCalculation;
 
+
+import com.mobiledev.topimpamatricks.Calculator.Detail;
+
 import org.ejml.data.CDenseMatrix64F;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;

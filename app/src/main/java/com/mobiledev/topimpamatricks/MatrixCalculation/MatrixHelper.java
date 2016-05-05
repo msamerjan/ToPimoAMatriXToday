@@ -1,16 +1,14 @@
 package com.mobiledev.topimpamatricks.MatrixCalculation;
 
-import com.mobiledev.topimpamatricks.Calculator.ComplexVector;
-
 import org.ejml.data.CDenseMatrix64F;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
 
-
 /**
- * Created by maiaphoebedylansamerjan on 4/17/16.
+ * Created by larspmayrand on 4/14/16.
  */
 public class MatrixHelper {
+
     public static String classify(CDenseMatrix64F matrix) {
         if (isReal(matrix)) {
             if (matrix.numCols == 1) {
@@ -61,7 +59,7 @@ public class MatrixHelper {
         return new Vector(realPart);
     }
 
-    public static ComplexVector makeVector(CDenseMatrix64F matrix) {
+    public static com.mobiledev.topimpamatricks.Calculator.ComplexVector makeVector(CDenseMatrix64F matrix) {
         if (matrix.numCols != 1 && matrix.numRows != 1)
             throw new IllegalArgumentException("Matrix is not a vector!");
         if (matrix.numCols == 1) {
@@ -69,13 +67,13 @@ public class MatrixHelper {
             for (int r = 0; r < matrix.numRows; r++) {
                 vector[r] = new Complex64F(matrix.getReal(r, 0), matrix.getImaginary(r, 0));
             }
-            return new ComplexVector(vector);
+            return new com.mobiledev.topimpamatricks.Calculator.ComplexVector(vector);
         }
         Complex64F[] vector = new Complex64F[matrix.numCols];
         for (int c = 0; c < matrix.numCols; c++) {
             vector[c] = new Complex64F(matrix.getReal(0, c), matrix.getImaginary(0, c));
         }
-        return new ComplexVector(vector);
+        return new com.mobiledev.topimpamatricks.Calculator.ComplexVector(vector);
     }
 
     public static Vector makeVector(DenseMatrix64F matrix) {
@@ -130,6 +128,7 @@ public class MatrixHelper {
     }
 
     public static boolean isPrime(double n) {
+        if (n == 0) return false;
         for (int i = 2; i <= n / 2; i++) {
             if (n % i == 0) return false;
         }
@@ -180,6 +179,5 @@ public class MatrixHelper {
 //            }
 //        }
 //    }
-
 
 }

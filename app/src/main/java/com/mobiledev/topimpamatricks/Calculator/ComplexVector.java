@@ -1,11 +1,14 @@
 package com.mobiledev.topimpamatricks.Calculator;
 
+/**
+ * Created by larspmayrand on 4/24/16.
+ */
+
 import org.ejml.data.Complex64F;
 
-/**
- * Created by maiaphoebedylansamerjan on 4/29/16.
- */
+/** Model of a Complex Vector */
 public class ComplexVector {
+
     /** Name of vector. */
     private String name;
 
@@ -73,4 +76,6 @@ public class ComplexVector {
     public Complex64F[] getComponents() {
         return components;
     }
+
 }
+

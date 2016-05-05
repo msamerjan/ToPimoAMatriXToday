@@ -38,7 +38,7 @@
         <Key android:codes="69" android:keyLabel="i"/>
         <Key android:codes="95" android:keyIcon="@drawable/keyboard_negative_sign"/>
         <Key android:codes="-3"
-            android:keyWidth="15%p" android:keyLabel="DONE" android:keyEdgeFlags="right"/>
+            android:keyWidth="15%p" android:keyLabel="@string/label_done_key" android:keyEdgeFlags="right"/>
     </Row>
 
     <Row>

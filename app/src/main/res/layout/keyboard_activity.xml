@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/edit_matrix_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:text="@string/edit_screen_title"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        />
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/grid_view"
+        android:gravity="center"
+        android:clickable="true"
+        android:paddingTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/edit_matrix_title"
+        >
+    </GridView>
+
+    <Button
+        android:id="@+id/new_matrix_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_matrix_button"
+        android:textColor="@android:color/black"
+        android:layout_alignParentBottom="true"
+        />
+
+    <com.mobiledev.topimpamatricks.Keyboard.MathKeyboardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone">
+
+    </com.mobiledev.topimpamatricks.Keyboard.MathKeyboardView>
+
+</RelativeLayout>

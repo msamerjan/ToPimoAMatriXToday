@@ -22,6 +22,16 @@
             android:paddingBottom="4dp"/>
             tools:background="@android:color/holo_blue_light" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_detailActivity_button"
+            android:layout_alignParentBottom="true"
+            android:text="Create Matrix"
+            android:textColor="@android:color/black"
+            android:clickable="true"
+            />
+
         <TextView
             android:id="@+id/activity_main_digital_matrix"
             android:layout_width="match_parent"

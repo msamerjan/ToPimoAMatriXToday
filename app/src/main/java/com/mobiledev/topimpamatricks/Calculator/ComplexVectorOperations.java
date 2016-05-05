@@ -3,9 +3,10 @@ package com.mobiledev.topimpamatricks.Calculator;
 import org.ejml.data.Complex64F;
 
 /**
- * Created by maiaphoebedylansamerjan on 4/29/16.
+ * Created by larspmayrand on 4/26/16.
  */
 public class ComplexVectorOperations {
+
     public static ComplexVector add(ComplexVector vectorA, ComplexVector vectorB) {
         if (vectorA.getDimension() != vectorB.getDimension())
             throw new IllegalArgumentException("undefined");
@@ -35,4 +36,5 @@ public class ComplexVectorOperations {
         }
         return new ComplexVector(products);
     }
+
 }

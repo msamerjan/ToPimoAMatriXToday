@@ -8,15 +8,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import com.mobiledev.topimpamatricks.MatrixCalculation.Detail;
-import com.mobiledev.topimpamatricks.MatrixCalculation.FormatHelper;
 import com.mobiledev.topimpamatricks.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by maiaphoebedylansamerjan on 4/17/16.
+ * Created by larspmayrand on 4/14/16.
  */
 public class CalculatorRecyclerViewAdapter extends RecyclerView.Adapter<CalculatorRecyclerViewAdapter.DetailViewHolder> {
 
