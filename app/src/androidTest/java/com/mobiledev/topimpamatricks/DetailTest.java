@@ -7,6 +7,7 @@ import com.mobiledev.topimpamatricks.Calculator.DetailActivity;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -26,11 +27,12 @@ public class DetailTest {
         onView(withId(R.id.detail_activity_webview)).check(matches(isDisplayed()));
         onView(withId(R.id.detail_row_textview)).check(matches(isDisplayed()));
 
-
     }
 
     @Test
     public void testInformationCorrect(){
+        onData(withId(R.id.))
+
 
     }
 

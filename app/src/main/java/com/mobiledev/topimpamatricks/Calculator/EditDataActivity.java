@@ -63,7 +63,7 @@ public class EditDataActivity extends Activity {
         public void newMatrixButtonClicked() {
         numCol++;
         numRow++;
-            while(numCol == numRow){
+            while(numCol == numRow&& numCol>5 && numRow>5){
                 CDenseMatrix64F matrix = MatrixHelper.makeComplex(RandomMatrices.createOrthogonal(numRow, numCol, new Random()));
                 Intent intent = new Intent(this, EditText.class);
                 Bundle mBundle = new Bundle();
